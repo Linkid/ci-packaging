@@ -5,6 +5,7 @@ python:
 
 install:
     - pip install fretwork
+    - sudo update-alternatives --config gcc
 
 script:
     - python -c "from fretwork.mixstream import VorbisFileMixStream"
