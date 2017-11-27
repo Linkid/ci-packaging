@@ -3,9 +3,17 @@ python:
     - 2.7
     - 3.6
 
+addons:
+  apt:
+    sources:
+      - llvm-toolchain-trusty-3.9
+    packages:
+      - clang-3.9
+      - libc++-dev
+      - libc++abi-dev
+
 install:
     - pip install fretwork
-    - sudo update-alternatives --config gcc
 
 script:
     - python -c "from fretwork.mixstream import VorbisFileMixStream"
