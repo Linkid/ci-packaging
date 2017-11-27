@@ -9,3 +9,4 @@ install:
 
 script:
     - python -c "from fretwork.mixstream import VorbisFileMixStream"
+    - python -c "from fretwork.mixstream import *"
