@@ -1,0 +1,6 @@
+[submodule "multibuild"]
+	path = multibuild
+	url = https://github.com/matthew-brett/multibuild.git
+[submodule "fretwork"]
+	path = fretwork
+	url = https://github.com/fofix/fretwork.git
