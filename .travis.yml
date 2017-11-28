@@ -3,12 +3,17 @@ python:
     - 2.7
     - 3.6
 
+addons:
+    apt:
+        sources:
+            - ubuntu-toolchain-r-test
+        packages:
+            #- gcc-4.9
+            - g++-4.9
+
 install:
     - LD_LIBRARY_PATH=/usr/local/lib64/:$LD_LIBRARY_PATH
     - export LD_LIBRARY_PATH
-    - sudo apt-add-repository ppa:ubuntu-toolchain-r/test
-    - sudo apt-get update
-    - sudo apt-get install gcc-4.9 g++-4.9
     - pip install fretwork
 
 script:
