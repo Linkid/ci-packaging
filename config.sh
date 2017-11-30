@@ -11,6 +11,7 @@ function pre_build {
     yum info SDL-devel
     build_simple SDL 1.2.15 http://www.libsdl.org/release/ tar.gz
     build_simple SDL_mixer 1.2.12 http://www.libsdl.org/projects/SDL_mixer/release/ tar.gz
+    build_simple soundtouch 2.0.0 http://www.surina.net/soundtouch/ tar.gz
 }
 
 function run_tests {
