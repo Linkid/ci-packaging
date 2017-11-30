@@ -5,14 +5,12 @@ function pre_build {
     # Any stuff that you need to do before you start building the wheels
     # Runs in the root directory of this repository.
     yum install -y \
-        SDL \
-        SDL-devel \
         SDL_image-devel \
-        SDL_mixer-devel \
         SDL_ttf-devel \
         libvorbis-devel
     yum info SDL-devel
     build_simple SDL 1.2.15 http://www.libsdl.org/release/ tar.gz
+    build_simple SDL_mixer 1.2.12 http://www.libsdl.org/projects/SDL_mixer/release/ tar.gz
 }
 
 function run_tests {
