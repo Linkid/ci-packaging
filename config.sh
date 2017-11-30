@@ -11,6 +11,7 @@ function pre_build {
         SDL_mixer-devel \
         SDL_ttf-devel \
         libvorbis-devel
+    yum info SDL-devel
 }
 
 function run_tests {
