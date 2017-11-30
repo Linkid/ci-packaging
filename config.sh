@@ -4,7 +4,14 @@
 function pre_build {
     # Any stuff that you need to do before you start building the wheels
     # Runs in the root directory of this repository.
-    :
+    yum install -y \
+        portmidi-devel \
+        SDL-devel \
+        SDL_image-devel \
+        SDL_mixer-devel \
+        SDL_tff-devel \
+        soundtouch-devel \
+        libvorbis-devel
 }
 
 function run_tests {
