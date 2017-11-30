@@ -8,10 +8,29 @@ function pre_build {
         SDL_image-devel \
         SDL_ttf-devel \
         libvorbis-devel
-    yum info SDL-devel
     build_simple SDL 1.2.15 http://www.libsdl.org/release/ tar.gz
     build_simple SDL_mixer 1.2.12 http://www.libsdl.org/projects/SDL_mixer/release/ tar.gz
-    build_simple soundtouch 2.0.0 http://www.surina.net/soundtouch/ tar.gz
+    build_soundtouch 2.0.0 http://www.surina.net/soundtouch/ tar.gz
+}
+
+
+function build_soundtouch {
+    local name="soundtouch"
+    local version=$1
+    local url=$2
+    local ext=${3:-tar.gz}
+    local configure_args=${@:4}
+    if [ -e "${name}-stamp" ]; then
+        return
+    fi
+    local name_version="${name}-${version}"
+    local archive=${name_version}.${ext}
+    fetch_unpack $url/$archive
+    (cd $name \
+        && ./configure --prefix=$BUILD_PREFIX $configure_args \
+        && make \
+        && make install)
+    touch "${name}-stamp"
 }
 
 function run_tests {
