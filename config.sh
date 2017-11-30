@@ -12,6 +12,7 @@ function pre_build {
         SDL_ttf-devel \
         libvorbis-devel
     yum info SDL-devel
+    build_simple SDL 1.2.15 http://www.libsdl.org/release/ tar.gz
 }
 
 function run_tests {
