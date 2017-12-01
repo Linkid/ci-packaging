@@ -26,6 +26,7 @@ function build_flac {
     local name_version="${name}-${version}"
     local archive=${name_version}.${ext}
     fetch_unpack $url/$archive
+    tar Jxf $archive
     (cd $name_version \
         && sed -i -e 's/AM_PATH_XMMS/true; dnl &/' configure.in \
         && autoreconf -fiv \
@@ -49,7 +50,7 @@ function build_soundtouch {
     local archive=${name_version}.${ext}
     fetch_unpack $url/$archive
     (cd $name \
-        && ./boostrap \
+        && ./bootstrap \
         && ./configure --prefix=$BUILD_PREFIX $configure_args \
         && make \
         && make install)
