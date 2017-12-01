@@ -8,10 +8,10 @@ function pre_build {
         SDL_image-devel \
         SDL_ttf-devel \
         libvorbis-devel
+    build_flac 1.3.2 http://downloads.xiph.org/releases/flac/ tar.xz disable-cpplibs
+    build_soundtouch 2.0.0 http://www.surina.net/soundtouch/ tar.gz
     build_simple SDL 1.2.15 http://www.libsdl.org/release/ tar.gz
     build_simple SDL_mixer 1.2.12 http://www.libsdl.org/projects/SDL_mixer/release/ tar.gz
-    build_flac 1.3.2 http://downloads.xiph.org/releases/flac/ tar.xz
-    build_soundtouch 2.0.0 http://www.surina.net/soundtouch/ tar.gz
 }
 
 function build_flac {
@@ -26,7 +26,7 @@ function build_flac {
     local name_version="${name}-${version}"
     local archive=${name_version}.${ext}
     fetch_unpack $url/$archive
-    tar Jxf $archive
+    tar -xf $archive
     (cd $name_version \
         && sed -i -e 's/AM_PATH_XMMS/true; dnl &/' configure.in \
         && autoreconf -fiv \
@@ -52,7 +52,7 @@ function build_soundtouch {
     (cd $name \
         && ./bootstrap \
         && ./configure --prefix=$BUILD_PREFIX $configure_args \
-        && make \
+        && make LDFLAGS=-no-undefined \
         && make install)
     touch "${name}-stamp"
 }
