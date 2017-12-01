@@ -8,6 +8,9 @@ function pre_build {
         SDL_image-devel \
         SDL_ttf-devel \
         libvorbis-devel
+    #build_simple gettext 0.19.8.1 http://ftp.gnu.org/gnu/gettext/ tar.gz
+    #build_glib 2.54.2 http://ftp.gnome.org/pub/GNOME/sources/glib/2.54/ tar.xz
+    build_simple pkg-config 0.29.2 http://pkgconfig.freedesktop.org/releases/ tar.gz
     build_flac 1.3.2 http://downloads.xiph.org/releases/flac/ tar.xz disable-cpplibs
     build_soundtouch 2.0.0 http://www.surina.net/soundtouch/ tar.gz
     build_simple SDL 1.2.15 http://www.libsdl.org/release/ tar.gz
@@ -26,7 +29,7 @@ function build_flac {
     local name_version="${name}-${version}"
     local archive=${name_version}.${ext}
     fetch_unpack $url/$archive
-    tar -xf $archive
+    tar -Jxf $archive
     (cd $name_version \
         && sed -i -e 's/AM_PATH_XMMS/true; dnl &/' configure.in \
         && autoreconf -fiv \
