@@ -27,6 +27,7 @@ function build_soundtouch {
     local archive=${name_version}.${ext}
     fetch_unpack $url/$archive
     (cd $name \
+        && ./boostrap \
         && ./configure --prefix=$BUILD_PREFIX $configure_args \
         && make \
         && make install)
