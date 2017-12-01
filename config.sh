@@ -10,7 +10,29 @@ function pre_build {
         libvorbis-devel
     build_simple SDL 1.2.15 http://www.libsdl.org/release/ tar.gz
     build_simple SDL_mixer 1.2.12 http://www.libsdl.org/projects/SDL_mixer/release/ tar.gz
+    build_flac 1.3.2 http://downloads.xiph.org/releases/flac/ tar.xz
     build_soundtouch 2.0.0 http://www.surina.net/soundtouch/ tar.gz
+}
+
+function build_flac {
+    local name="flac"
+    local version=$1
+    local url=$2
+    local ext=${3:-tar.gz}
+    local configure_args=${@:4}
+    if [ -e "${name}-stamp" ]; then
+        return
+    fi
+    local name_version="${name}-${version}"
+    local archive=${name_version}.${ext}
+    fetch_unpack $url/$archive
+    (cd $name_version \
+        && sed -i -e 's/AM_PATH_XMMS/true; dnl &/' configure.in \
+        && autoreconf -fiv \
+        && ./configure --prefix=$BUILD_PREFIX $configure_args \
+        && make \
+        && make install)
+    touch "${name}-stamp"
 }
 
 
