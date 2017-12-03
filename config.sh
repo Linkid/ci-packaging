@@ -87,13 +87,11 @@ function build_soundtouch {
     fetch_unpack $url/$archive
     (cd $name \
         && ./bootstrap \
-        && ./configure --prefix=$BUILD_PREFIX $configure_args \
+        && ./configure --prefix=/usr -enable-shared $configure_args \
         && make LDFLAGS=-no-undefined \
         && make install)
     touch "${name}-stamp"
-    echo "*************"
     which soundtouch
-    echo "*************"
 }
 
 function run_tests {
