@@ -74,6 +74,11 @@ function build_flac {
 
 
 function build_soundtouch {
+    yum install -y \
+        automake \
+        autoconf \
+        libtool
+
     local name="soundtouch"
     local version=$1
     local url=$2
