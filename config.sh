@@ -4,10 +4,7 @@
 function pre_build {
     # Any stuff that you need to do before you start building the wheels
     # Runs in the root directory of this repository.
-    yum install -y \
-        SDL_image-devel \
-        SDL_ttf-devel \
-        libvorbis-devel
+
     #build_simple gettext 0.19.8.1 http://ftp.gnu.org/gnu/gettext/ tar.gz
     #build_glib 2.54.2 http://ftp.gnome.org/pub/GNOME/sources/glib/2.54/ tar.xz
     build_simple pkg-config 0.29.2 http://pkgconfig.freedesktop.org/releases/ tar.gz
