@@ -5,7 +5,6 @@ function pre_build {
     # Any stuff that you need to do before you start building the wheels
     # Runs in the root directory of this repository.
 
-    :
     #build_zlib
     #build_libpng
     #build_jpeg
@@ -13,7 +12,7 @@ function pre_build {
     #build_glib 2.54.2 http://ftp.gnome.org/pub/GNOME/sources/glib/2.54/ tar.xz
     #build_simple pkg-config 0.29.2 http://pkgconfig.freedesktop.org/releases/ tar.gz
     #build_simple libogg 1.3.2 http://downloads.xiph.org/releases/ogg/ tar.gz
-    #build_simple libvorbis 1.3.5 http://downloads.xiph.org/releases/vorbis/ tar.gz
+    build_simple libvorbis 1.3.5 http://downloads.xiph.org/releases/vorbis/ tar.gz
     #build_flac 1.3.2 http://downloads.xiph.org/releases/flac/ tar.xz disable-cpplibs
     #build_soundtouch 2.0.0 http://www.surina.net/soundtouch/ tar.gz
     #build_simple SDL 1.2.15 http://www.libsdl.org/release/ tar.gz
