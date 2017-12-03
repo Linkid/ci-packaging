@@ -61,8 +61,8 @@ function build_flac {
     local name_version="${name}-${version}"
     local archive=${name_version}.${ext}
     fetch_unpack $url/$archive
-    echo `ls`
-    tar -xf $archive
+    tar --help
+    tar -Jxf $archive
     (cd $name_version \
         && sed -i -e 's/AM_PATH_XMMS/true; dnl &/' configure.in \
         && autoreconf -fiv \
@@ -91,6 +91,9 @@ function build_soundtouch {
         && make LDFLAGS=-no-undefined \
         && make install)
     touch "${name}-stamp"
+    echo "*************"
+    which soundtouch
+    echo "*************"
 }
 
 function run_tests {
