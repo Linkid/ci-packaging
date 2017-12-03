@@ -16,10 +16,10 @@ function pre_build {
     #build_flac 1.3.2 http://downloads.xiph.org/releases/flac/ tar.xz disable-cpplibs
     build_simple libsmf 1.3 http://download.sourceforge.net/libsmf/ tar.gz
     #build_soundtouch 2.0.0 http://www.surina.net/soundtouch/ tar.gz
-    build_soundtouch 1.3.0 http://www.surina.net/soundtouch/ tar.gz
-    build_soundtouch 1.3.1 http://www.surina.net/soundtouch/ tar.gz
-    build_soundtouch 1.4.0 http://www.surina.net/soundtouch/ tar.gz
-    build_soundtouch 1.5.0 http://www.surina.net/soundtouch/ tar.gz
+    build_soundtouch 1.3.0 http://www.surina.net/soundtouch/ zip
+    build_soundtouch 1.3.1 http://www.surina.net/soundtouch/ zip
+    build_soundtouch 1.4.0 http://www.surina.net/soundtouch/ zip
+    build_soundtouch 1.5.0 http://www.surina.net/soundtouch/ zip
     build_simple freetype 2.8.1 http://download.savannah.gnu.org/releases/freetype/ tar.bz2
     build_simple SDL 1.2.15 http://www.libsdl.org/release/ tar.gz
     build_simple SDL_mixer 1.2.12 http://www.libsdl.org/projects/SDL_mixer/release/ tar.gz
