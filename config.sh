@@ -15,10 +15,10 @@ function pre_build {
     build_simple libvorbis 1.3.5 http://downloads.xiph.org/releases/vorbis/ tar.gz
     #build_flac 1.3.2 http://downloads.xiph.org/releases/flac/ tar.xz disable-cpplibs
     #build_soundtouch 2.0.0 http://www.surina.net/soundtouch/ tar.gz
-    #build_simple SDL 1.2.15 http://www.libsdl.org/release/ tar.gz
-    #build_simple SDL_mixer 1.2.12 http://www.libsdl.org/projects/SDL_mixer/release/ tar.gz
-    #build_simple SDL_ttf 2.0.11 http://www.libsdl.org/projects/SDL_ttf/release/ tar.gz
-    #build_simple SDL_image 1.2.12 http://www.libsdl.org/projects/SDL_image/release/ tar.gz
+    build_simple SDL 1.2.15 http://www.libsdl.org/release/ tar.gz
+    build_simple SDL_mixer 1.2.12 http://www.libsdl.org/projects/SDL_mixer/release/ tar.gz
+    build_simple SDL_ttf 2.0.11 http://www.libsdl.org/projects/SDL_ttf/release/ tar.gz
+    build_simple SDL_image 1.2.12 http://www.libsdl.org/projects/SDL_image/release/ tar.gz
 }
 
 function build_glib {
