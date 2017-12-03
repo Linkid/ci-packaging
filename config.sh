@@ -74,24 +74,25 @@ function build_flac {
 
 
 function build_soundtouch {
-    COMMON_AUTOCONF_FLAGS="--prefix=$BUILD_PREFIX --disable-static --enable-shared CPPFLAGS=-I$BUILD_PREFIX/include LDFLAGS=-L$BUILD_PREFIX/lib"
-    local name="soundtouch"
-    local version=$1
-    local url=$2
-    local ext=${3:-tar.gz}
-    local configure_args=${@:4}
-    if [ -e "${name}-stamp" ]; then
-        return
-    fi
-    local name_version="${name}-${version}"
-    local archive=${name_version}.${ext}
-    #&& ./configure --prefix=$BUILD_PREFIX $configure_args \
-    fetch_unpack $url/$archive
-    (cd $name \
-        && ./bootstrap \
-        && ./configure $COMMON_AUTOCONF_FLAGS $configure_args \
-        && make LDFLAGS=-no-undefined \
-        && make install)
+    #COMMON_AUTOCONF_FLAGS="--prefix=$BUILD_PREFIX --disable-static --enable-shared CPPFLAGS=-I$BUILD_PREFIX/include LDFLAGS=-L$BUILD_PREFIX/lib"
+    #local name="soundtouch"
+    #local version=$1
+    #local url=$2
+    #local ext=${3:-tar.gz}
+    #local configure_args=${@:4}
+    #if [ -e "${name}-stamp" ]; then
+    #    return
+    #fi
+    #local name_version="${name}-${version}"
+    #local archive=${name_version}.${ext}
+    ##&& ./configure --prefix=$BUILD_PREFIX $configure_args \
+    #fetch_unpack $url/$archive
+    #(cd $name \
+    #    && ./bootstrap \
+    #    && ./configure $COMMON_AUTOCONF_FLAGS $configure_args \
+    #    && make LDFLAGS=-no-undefined \
+    #    && make install)
+    yum install -y soundtouch
     touch "${name}-stamp"
 }
 
