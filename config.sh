@@ -13,7 +13,7 @@ function pre_build {
     #build_simple pkg-config 0.29.2 http://pkgconfig.freedesktop.org/releases/ tar.gz
     build_simple libogg 1.3.2 http://downloads.xiph.org/releases/ogg/ tar.gz
     build_simple libvorbis 1.3.5 http://downloads.xiph.org/releases/vorbis/ tar.gz
-    build_flac 1.3.2 http://downloads.xiph.org/releases/flac/ tar.xz disable-cpplibs
+    #build_flac 1.3.2 http://downloads.xiph.org/releases/flac/ tar.xz disable-cpplibs
     build_simple libsmf 1.3 http://download.sourceforge.net/libsmf/ tar.gz
     build_soundtouch 2.0.0 http://www.surina.net/soundtouch/ tar.gz
     build_simple freetype 2.8.1 http://download.savannah.gnu.org/releases/freetype/ tar.bz2
@@ -74,11 +74,7 @@ function build_flac {
 
 
 function build_soundtouch {
-    yum install -y \
-        automake \
-        autoconf \
-        libtool
-
+    COMMON_AUTOCONF_FLAGS="--prefix=$BUILD_PREFIX --disable-static --enable-shared CPPFLAGS=-I$BUILD_PREFIX/include LDFLAGS=-L$BUILD_PREFIX/lib"
     local name="soundtouch"
     local version=$1
     local url=$2
@@ -89,14 +85,14 @@ function build_soundtouch {
     fi
     local name_version="${name}-${version}"
     local archive=${name_version}.${ext}
+    #&& ./configure --prefix=$BUILD_PREFIX $configure_args \
     fetch_unpack $url/$archive
     (cd $name \
         && ./bootstrap \
-        && ./configure --prefix=/usr -enable-shared $configure_args \
+        && ./configure $COMMON_AUTOCONF_FLAGS $configure_args \
         && make LDFLAGS=-no-undefined \
         && make install)
     touch "${name}-stamp"
-    which soundtouch
 }
 
 function run_tests {
