@@ -64,7 +64,7 @@ function build_glib {
     fi
     local name_version="${name}-${version}"
     local archive=${name_version}.${ext}
-    fetch $url/$archive
+    fetch_unpack $url/$archive
     tar Jxf $archive
     (cd $name_version \
         && ./configure --prefix=$BUILD_PREFIX $configure_args \
@@ -88,7 +88,7 @@ function build_flac {
     fi
     local name_version="${name}-${version}"
     local archive=${name_version}.${ext}
-    fetch_unpack $url/$archive
+    fetch $url/$archive
     unxz $archive
     tar xf $name_version.tar
     (cd $name_version \
