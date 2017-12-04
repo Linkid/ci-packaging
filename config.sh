@@ -27,6 +27,30 @@ function pre_build {
     build_simple SDL_image 1.2.12 http://www.libsdl.org/projects/SDL_image/release/ tar.gz
 }
 
+function fetch {
+    # Fetch input archive name from input URL
+    # Parameters
+    #    url - URL from which to fetch archive
+    #    archive_fname (optional) archive name
+    #
+    # If `archive_fname` not specified then use basename from `url`
+    # If `archive_fname` already present at download location, use that instead.
+    local url=$1
+    if [ -z "$url" ];then echo "url not defined"; exit 1; fi
+    local archive_fname=${2:-$(basename $url)}
+    local arch_sdir="${ARCHIVE_SDIR:-archives}"
+    # Make the archive directory in case it doesn't exist
+    mkdir -p $arch_sdir
+    local out_archive="${arch_sdir}/${archive_fname}"
+    # Fetch the archive if it does not exist
+    if [ ! -f "$out_archive" ]; then
+        curl -L $url > $out_archive
+    fi
+    # Unpack archive, refreshing contents
+    rm_mkdir arch_tmp
+    cd arch_tmp
+}
+
 function build_glib {
     build_xz
 
@@ -40,7 +64,7 @@ function build_glib {
     fi
     local name_version="${name}-${version}"
     local archive=${name_version}.${ext}
-    fetch_unpack $url/$archive
+    fetch $url/$archive
     tar Jxf $archive
     (cd $name_version \
         && ./configure --prefix=$BUILD_PREFIX $configure_args \
@@ -80,7 +104,7 @@ function build_flac {
 function build_soundtouch {
     COMMON_AUTOCONF_FLAGS="--prefix=$BUILD_PREFIX --disable-static --enable-shared CPPFLAGS=-I$BUILD_PREFIX/include LDFLAGS=-L$BUILD_PREFIX/lib"
     rpm -Uvh http://repository.it4i.cz/mirrors/repoforge/redhat/el5/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el5.rf.x86_64.rpm
-    rpm -Uvh http://repository.it4i.cz/mirrors/repoforge/redhat/el5/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el5.rf.i386.rpm
+    #rpm -Uvh http://repository.it4i.cz/mirrors/repoforge/redhat/el5/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el5.rf.i386.rpm
     yum install -y soundtouch-devel
     touch "${name}-stamp"
 }
