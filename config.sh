@@ -106,7 +106,7 @@ function build_soundtouch {
     rpm -Uvh http://repository.it4i.cz/mirrors/repoforge/redhat/el5/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el5.rf.x86_64.rpm
     #rpm -Uvh http://repository.it4i.cz/mirrors/repoforge/redhat/el5/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el5.rf.i386.rpm
     yum install -y soundtouch-devel
-    touch "${name}-stamp"
+    touch "soundtouch-stamp"
 }
 
 function run_tests {
