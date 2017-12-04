@@ -13,7 +13,7 @@ function pre_build {
     #build_simple pkg-config 0.29.2 http://pkgconfig.freedesktop.org/releases/ tar.gz
     build_simple libogg 1.3.2 http://downloads.xiph.org/releases/ogg/ tar.gz
     build_simple libvorbis 1.3.5 http://downloads.xiph.org/releases/vorbis/ tar.gz
-    #build_flac 1.3.2 http://downloads.xiph.org/releases/flac/ tar.xz disable-cpplibs
+    build_flac 1.3.2 http://downloads.xiph.org/releases/flac/ tar.xz disable-cpplibs
     build_simple libsmf 1.3 http://download.sourceforge.net/libsmf/ tar.gz
     #build_soundtouch 2.0.0 http://www.surina.net/soundtouch/ tar.gz
     build_soundtouch 1.3.0 http://www.surina.net/soundtouch/ zip
@@ -65,8 +65,8 @@ function build_flac {
     local name_version="${name}-${version}"
     local archive=${name_version}.${ext}
     fetch_unpack $url/$archive
-    tar --help
-    tar -Jxf $archive
+    unxz $archive
+    tar xf $name_version.tar
     (cd $name_version \
         && sed -i -e 's/AM_PATH_XMMS/true; dnl &/' configure.in \
         && autoreconf -fiv \
