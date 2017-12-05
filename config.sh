@@ -42,7 +42,7 @@ function fetch_xz {
     local out_archive_tar=${out_archive_xz%.*}
     # Fetch the archive if it does not exist
     if [ ! -f "$out_archive_xz" ]; then
-        curl -L $url > $out_archive
+        curl -L $url > $out_archive_xz
     fi
     # Unpack archive, refreshing contents
     rm_mkdir arch_tmp
