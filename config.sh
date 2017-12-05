@@ -110,5 +110,8 @@ function run_tests {
     # Runs tests on installed distribution from an empty directory
     python --version
     sources_dir=$(dirname $(python -c 'import fretwork; print(fretwork.__file__)'))
-    (cd $sources_dir && python setup.py test)
+    echo $sources_dir
+    ls $sources_dir
+    #(cd $sources_dir && python setup.py test)
+    python -c 'import sys; import fretwork; from fretwork.mixstream import *'
 }
