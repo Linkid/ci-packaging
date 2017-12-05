@@ -109,5 +109,6 @@ function build_soundtouch {
 function run_tests {
     # Runs tests on installed distribution from an empty directory
     python --version
-    python setup.py test
+    sources_dir=$(dirname $(python -c 'import fretwork; print(fretwork.__file__)'))
+    (cd $sources_dir && python setup.py test)
 }
