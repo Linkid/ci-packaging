@@ -99,11 +99,11 @@ function build_flac {
 
 
 function build_soundtouch {
-    COMMON_AUTOCONF_FLAGS="--prefix=$BUILD_PREFIX --disable-static --enable-shared CPPFLAGS=-I$BUILD_PREFIX/include LDFLAGS=-L$BUILD_PREFIX/lib"
+    if [ -e soundtouch-stamp ]; then return; fi
     rpm -Uvh http://repository.it4i.cz/mirrors/repoforge/redhat/el5/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el5.rf.x86_64.rpm
     #rpm -Uvh http://repository.it4i.cz/mirrors/repoforge/redhat/el5/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el5.rf.i386.rpm
     yum install -y soundtouch-devel
-    touch "soundtouch-stamp"
+    touch soundtouch-stamp
 }
 
 function run_tests {
