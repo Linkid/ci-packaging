@@ -50,26 +50,28 @@ function fetch_xz {
 }
 
 function build_glib {
-    build_xz
+    #build_xz
 
-    local name="glib"
-    local version=$1
-    local url=$2
-    local ext=${3:-tar.gz}
-    local configure_args=${@:4}
-    if [ -e "${name}-stamp" ]; then
-        return
-    fi
-    local name_version="${name}-${version}"
-    local archive=${name_version}.${ext}
-    fetch_xz $url/$archive
-    (cd $name_version \
-        && ./configure --prefix=$BUILD_PREFIX $configure_args \
-        && make -C glib \
-        && make -C gthread \
-        && make -C glib install \
-        && make -C gthread install)
-    touch "${name}-stamp"
+    #local name="glib"
+    #local version=$1
+    #local url=$2
+    #local ext=${3:-tar.gz}
+    #local configure_args=${@:4}
+    #if [ -e "${name}-stamp" ]; then
+    #    return
+    #fi
+    #local name_version="${name}-${version}"
+    #local archive=${name_version}.${ext}
+    #fetch_xz $url/$archive
+    #(cd $name_version \
+    #    && ./configure --prefix=$BUILD_PREFIX $configure_args \
+    #    && make -C glib \
+    #    && make -C gthread \
+    #    && make -C glib install \
+    #    && make -C gthread install)
+    #touch "${name}-stamp"
+
+    yum install -y glib2-devel
 }
 
 function build_flac {
