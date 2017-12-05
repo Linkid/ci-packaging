@@ -24,7 +24,7 @@ function pre_build {
     build_simple SDL_image 1.2.12 http://www.libsdl.org/projects/SDL_image/release/ tar.gz
 }
 
-function fetch {
+function fetch_xz {
     # Fetch input archive name from input URL
     # Parameters
     #    url - URL from which to fetch archive
@@ -38,14 +38,15 @@ function fetch {
     local arch_sdir="${ARCHIVE_SDIR:-archives}"
     # Make the archive directory in case it doesn't exist
     mkdir -p $arch_sdir
-    local out_archive="${arch_sdir}/${archive_fname}"
+    local out_archive_xz="${arch_sdir}/${archive_fname}"
+    local out_archive_tar=${out_archive_xz%.*}
     # Fetch the archive if it does not exist
-    if [ ! -f "$out_archive" ]; then
+    if [ ! -f "$out_archive_xz" ]; then
         curl -L $url > $out_archive
     fi
     # Unpack archive, refreshing contents
     rm_mkdir arch_tmp
-    cd arch_tmp
+    (cd arch_tmp && unxz ../$out_archive_xz && tar xf ../$out_archive_tar && rsync --delete -avh * ..)
 }
 
 function build_glib {
@@ -61,9 +62,7 @@ function build_glib {
     fi
     local name_version="${name}-${version}"
     local archive=${name_version}.${ext}
-    fetch_unpack $url/$archive
-    unxz $archive
-    tar xf $name_version.tar
+    fetch_xz $url/$archive
     (cd $name_version \
         && ./configure --prefix=$BUILD_PREFIX $configure_args \
         && make -C glib \
