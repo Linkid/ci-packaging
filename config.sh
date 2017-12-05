@@ -71,7 +71,7 @@ function build_glib {
     #    && make -C gthread install)
     #touch "${name}-stamp"
 
-    yum install -y glib2-devel
+    yum install -y glib2 glib2-devel
 }
 
 function build_flac {
