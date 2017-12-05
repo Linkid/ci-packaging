@@ -9,6 +9,7 @@ function pre_build {
     build_libpng
     build_jpeg
     #build_simple gettext 0.19.8.1 http://ftp.gnu.org/gnu/gettext/ tar.gz
+    build_simple libffi 3.2.1 ftp://sourceware.org/pub/libffi/ tar.gz --enable-portable-binary
     build_glib 2.54.2 http://ftp.gnome.org/pub/GNOME/sources/glib/2.54/ tar.xz
     #build_simple pkg-config 0.29.2 http://pkgconfig.freedesktop.org/releases/ tar.gz
     build_simple libogg 1.3.2 http://downloads.xiph.org/releases/ogg/ tar.gz
@@ -50,28 +51,26 @@ function fetch_xz {
 }
 
 function build_glib {
-    #build_xz
+    build_xz
 
-    #local name="glib"
-    #local version=$1
-    #local url=$2
-    #local ext=${3:-tar.gz}
-    #local configure_args=${@:4}
-    #if [ -e "${name}-stamp" ]; then
-    #    return
-    #fi
-    #local name_version="${name}-${version}"
-    #local archive=${name_version}.${ext}
-    #fetch_xz $url/$archive
-    #(cd $name_version \
-    #    && ./configure --prefix=$BUILD_PREFIX $configure_args \
-    #    && make -C glib \
-    #    && make -C gthread \
-    #    && make -C glib install \
-    #    && make -C gthread install)
-    #touch "${name}-stamp"
-
-    yum install -y glib2 glib2-devel
+    local name="glib"
+    local version=$1
+    local url=$2
+    local ext=${3:-tar.gz}
+    local configure_args=${@:4}
+    if [ -e "${name}-stamp" ]; then
+        return
+    fi
+    local name_version="${name}-${version}"
+    local archive=${name_version}.${ext}
+    fetch_xz $url/$archive
+    (cd $name_version \
+        && ./configure --prefix=$BUILD_PREFIX $configure_args \
+        && make -C glib \
+        && make -C gthread \
+        && make -C glib install \
+        && make -C gthread install)
+    touch "${name}-stamp"
 }
 
 function build_flac {
