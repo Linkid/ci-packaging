@@ -59,6 +59,7 @@ function build_gettext {
 
 
 function build_glib {
+    yum install -y util-linux
     build_xz
 
     local name="glib"
