@@ -8,7 +8,8 @@ function pre_build {
     #build_zlib
     build_libpng
     build_jpeg
-    build_simple gettext 0.19.8.1 http://ftp.gnu.org/gnu/gettext/ tar.gz
+    #build_simple gettext 0.19.8.1 http://ftp.gnu.org/gnu/gettext/ tar.gz
+    build_gettext
     build_simple libffi 3.2.1 ftp://sourceware.org/pub/libffi/ tar.gz --enable-portable-binary
     build_glib 2.54.2 http://ftp.gnome.org/pub/GNOME/sources/glib/2.54/ tar.xz
     #build_simple pkg-config 0.29.2 http://pkgconfig.freedesktop.org/releases/ tar.gz
@@ -49,6 +50,13 @@ function fetch_xz {
     rm_mkdir arch_tmp
     (cd arch_tmp && unxz ../$out_archive_xz && tar xf ../$out_archive_tar && rsync --delete -avh * ..)
 }
+
+
+function build_gettext {
+    yum install -y gettext-devel
+    touch gettext-stamp
+}
+
 
 function build_glib {
     build_xz
