@@ -66,6 +66,10 @@ before_script:
     - |
       if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
         # auditwheel
+        ## install patchelf
+        wget https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.gz
+        tar -xzf patchelf-0.9.tar.gz
+        (cd patchelf-0.9 && ./bootstrap.sh && ./configure && make && make install)
         ## python3 virtualenv
         virtualenv -p python3 venv
         source venv/bin/activate
