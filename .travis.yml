@@ -87,6 +87,7 @@ before_script:
         done
         chmod -R a+rwX out
         deactivate
+        source ~/virtualenv/python2.7/bin/activate
 
       elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         # delocate
