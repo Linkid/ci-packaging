@@ -69,7 +69,7 @@ before_script:
         ## install patchelf
         wget https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2
         tar -xjf patchelf-0.9.tar.bz2
-        (cd patchelf-0.9 && ./bootstrap.sh && ./configure && make && make install)
+        (cd patchelf-0.9 && ./configure && make && make install)
         ## python3 virtualenv
         virtualenv -p python3 venv
         source venv/bin/activate
