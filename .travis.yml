@@ -1,21 +1,93 @@
 language: python
-python:
-    - 2.7
-    - 3.6
 
-addons:
-    apt:
-        sources:
-            - ubuntu-toolchain-r-test
-        packages:
-            #- gcc-4.9
-            - g++-4.9
+matrix:
+    include:
+        - os: linux
+          python: 2.7
+
+        - os: linux
+          python: 3.6
+
+        - os: macOS
+          language: generic
+          env: PY_VERSION=2.7
+
+        - os: macOS
+          language: generic
+          env: PY_VERSION=3.6
+
+before_install:
+    - |
+      if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+          sudo apt-get -qq update;
+          sudo apt-get install -y \
+            libportmidi-dev \
+            libsdl-image1.2-dev \
+            libsdl-mixer1.2-dev \
+            libsdl-ttf2.0-dev \
+            libsdl1.2-dev \
+            libsoundtouch-dev \
+            libvorbis-dev
+      elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+          brew update;
+          brew install \
+            glib \
+            libvorbis \
+            portmidi \
+            sdl \
+            sdl_image \
+            sdl_mixer \
+            sdl_ttf;
+          # soundtouch
+          wget https://www.surina.net/soundtouch/soundtouch-2.0.0.zip;
+          unzip soundtouch-2.0.0.zip;
+          cd soundtouch;
+          ./bootstrap;
+          ./configure;
+          make;
+          make install;
+          cd ..;
+      fi
 
 install:
-    - LD_LIBRARY_PATH=/usr/local/lib64/:$LD_LIBRARY_PATH
-    - export LD_LIBRARY_PATH
-    - pip install fretwork
+    - if [[ "$PY_VERSION" == "3.6" ]]; then brew install python3; fi
+    - if [[ "$PY_VERSION" == "3.6" ]]; then pip3 install virtualenv; fi
+    - if [[ "$PY_VERSION" == "3.6" ]]; then python3 -m virtualenv venv; fi
+    - if [[ "$PY_VERSION" == "3.6" ]]; then source venv/bin/activate; fi
+    - python --version
+    - pip --version
+    - pip install --upgrade pip wheel
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install -U py; fi  # for pytest
+    - pip install cython
+
+before_script:
+    - (cd fretwork && python setup.py sdist bdist_wheel)
+#    - (cd fretwork && pip wheel -w wheelhouse --no-deps .)
+    - |
+      if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        # auditwheel
+        ## install
+        pip install auditwheel
+        ## repair
+        auditwheel repair dist/*.whl -w out/
+        chmod -R a+rwX out
+
+      elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        # delocate
+        ## install
+        pip install delocate
+        ## list lib dependencies
+        delocate-listdeps dist/*.whl
+        echo in repair_wheelhouse, executing delocate-wheel
+        ## copies lib dependencies into wheel
+        delocate-wheel dist/*.whl
+        ## add platform tags
+        delocate-addplat --rm-orig -x 10_9 -x 10_10 dist/*.whl
+        mv dist out
+      fi
 
 script:
-    - python -c "from fretwork.mixstream import VorbisFileMixStream"
-    - python -c "from fretwork.mixstream import *"
+    - pip install out/*.whl
+#    - python setup.py check
+#    - python setup.py sdist bdist_wheel
+    - python -c "from fretwork import mixstream"
