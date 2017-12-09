@@ -75,6 +75,7 @@ before_script:
         ## repair
         for whl in dist/*.whl; do
             auditwheel repair $whl -w out/
+        done
         chmod -R a+rwX out
 
       elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
