@@ -9,11 +9,8 @@ function pre_build {
     build_libpng
     build_jpeg
     #build_simple gettext 0.19.8.1 http://ftp.gnu.org/gnu/gettext/ tar.gz
-    echo "gettext"
     build_gettext
-    echo "libffi"
     build_simple libffi 3.2.1 ftp://sourceware.org/pub/libffi/ tar.gz --enable-portable-binary
-    echo "glib"
     build_glib 2.54.2 http://ftp.gnome.org/pub/GNOME/sources/glib/2.54/ tar.xz
     #build_simple pkg-config 0.29.2 http://pkgconfig.freedesktop.org/releases/ tar.gz
     build_simple libogg 1.3.2 http://downloads.xiph.org/releases/ogg/ tar.gz
@@ -27,6 +24,7 @@ function pre_build {
     build_simple SDL_mixer 1.2.12 http://www.libsdl.org/projects/SDL_mixer/release/ tar.gz
     build_simple SDL_ttf 2.0.11 http://www.libsdl.org/projects/SDL_ttf/release/ tar.gz
     build_simple SDL_image 1.2.12 http://www.libsdl.org/projects/SDL_image/release/ tar.gz
+    python setup.py build_ext --inplace --force
 }
 
 function fetch_xz {
