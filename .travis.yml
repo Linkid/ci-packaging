@@ -86,6 +86,7 @@ before_script:
             auditwheel repair $whl -w out/
         done
         chmod -R a+rwX out
+        deactivate
 
       elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         # delocate
