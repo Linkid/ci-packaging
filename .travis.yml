@@ -62,7 +62,6 @@ install:
         pip3 install virtualenv;
         python3 -m virtualenv venv;
         source venv/bin/activate;
-      fi
       elif [[ "$PY_VERSION" == "2.7" ]]; then
         brew install python;
         pip install virtualenv;
