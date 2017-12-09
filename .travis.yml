@@ -73,7 +73,8 @@ before_script:
         ## install
         pip install auditwheel
         ## repair
-        auditwheel repair dist/*.whl -w out/
+        for whl in dist/*.whl; do
+            auditwheel repair $whl -w out/
         chmod -R a+rwX out
 
       elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
