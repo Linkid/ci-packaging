@@ -6,11 +6,13 @@ matrix:
           python: 2.7
           sudo: required
           dist: trusty
+          env: PY=2.7
 
         - os: linux
           python: 3.6
           sudo: required
           dist: trusty
+          env: PY=3.6
 
         - os: osx
           language: generic
@@ -74,10 +76,12 @@ before_script:
         wget https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2
         tar -xjf patchelf-0.9.tar.bz2
         (cd patchelf-0.9 && ./configure --prefix=/usr && make && sudo make install)
-        ## python3 virtualenv
-        virtualenv -p python3 venv
-        source venv/bin/activate
-        python --version
+        if [[ "$PY" == "2.7" ]]; then
+            ## python3 virtualenv
+            virtualenv -p python3 venv
+            source venv/bin/activate
+            python --version
+        fi
         ## install
         pip install auditwheel
         ## repair
@@ -86,8 +90,10 @@ before_script:
             auditwheel repair $whl -w out/
         done
         chmod -R a+rwX out
-        deactivate
-        source ~/virtualenv/python2.7/bin/activate
+        if [[ "$PY" == "2.7" ]]; then
+            deactivate
+            source ~/virtualenv/python2.7/bin/activate
+        fi
 
       elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         # delocate
