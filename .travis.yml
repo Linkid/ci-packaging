@@ -66,6 +66,10 @@ before_script:
     - |
       if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
         # auditwheel
+        ## python3 virtualenv
+        virtualenv -p python3 venv
+        source venv/bin/activate
+        python --version
         ## install
         pip install auditwheel
         ## repair
