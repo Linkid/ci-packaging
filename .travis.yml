@@ -64,7 +64,7 @@ install:
         source venv/bin/activate;
       elif [[ "$PY_VERSION" == "2.7" ]]; then
         brew install python;
-        pip install virtualenv;
+        pip2 install virtualenv;
         python -m virtualenv venv;
         source venv/bin/activate;
       fi
