@@ -89,9 +89,11 @@ before_script:
             python --version
         fi
         ## install patchelf
-        wget https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2
-        tar -xjf patchelf-0.9.tar.bz2
-        (cd patchelf-0.9 && ./configure && make && sudo make install)
+        PATCHELF_VERSION=6bfcafbba8d89e44f9ac9582493b4f27d9d8c369
+        curl -sL -o patchelf.tar.gz https://github.com/NixOS/patchelf/archive/$PATCHELF_VERSION.tar.gz
+        tar -xzf patchelf.tar.gz
+        (cd patchelf-$PATCHELF_VERSION && ./bootstrap.sh && ./configure && make && make install)
+        rm -rf patchelf.tar.gz patchelf-$PATCHELF_VERSION
         ## install
         pip install auditwheel
         ## repair
