@@ -119,12 +119,11 @@ before_script:
         ## add platform tags
         delocate-addplat --rm-orig -x 10_9 -x 10_10 fretwork/dist/*.whl
         mv fretwork/dist out
-        echo `ls -l out`
       fi
-#    - mv fretwork/dist out
+    - echo `ls -l out`
 
 script:
     - pip install out/*.whl
-#    - python setup.py check
-#    - python setup.py sdist bdist_wheel
     - python -c "from fretwork import mixstream"
+    - pip install pytest
+    - pytest fretwork/tests
