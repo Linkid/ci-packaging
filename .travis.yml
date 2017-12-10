@@ -74,7 +74,7 @@ install:
     - python --version
     - $PIP_CMD --version
     - $PIP_CMD install --upgrade pip wheel
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install -U py; fi  # for pytest
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $PIP_CMD install -U py; fi  # for pytest
     - $PIP_CMD install cython
 
 before_script:
@@ -94,7 +94,7 @@ before_script:
             python --version
         fi
         ## install
-        pip install auditwheel
+        $PIP_CMD install auditwheel
         ## repair
         for whl in fretwork/dist/*.whl; do
             echo $whl
@@ -122,7 +122,7 @@ before_script:
       fi
 
 script:
-    - pip install out/*.whl
+    - $PIP_CMD install out/*.whl
 #    - python setup.py check
 #    - python setup.py sdist bdist_wheel
     - python -c "from fretwork import mixstream"
