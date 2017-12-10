@@ -124,6 +124,6 @@ before_script:
 
 script:
     - pip install out/*.whl
-    - python -c "from fretwork import mixstream"
     - pip install pytest
     - pytest fretwork/tests
+    - python -c "from fretwork import mixstream"
