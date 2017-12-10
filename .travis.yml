@@ -8,7 +8,6 @@ matrix:
           dist: trusty
           env:
               - PY=2.7
-              - PIP_CMD=pip
 
         - os: linux
           python: 3.6
@@ -16,19 +15,16 @@ matrix:
           dist: trusty
           env:
               - PY=3.6
-              - PIP_CMD=pip
 
         - os: osx
           language: generic
           env:
               - PY_VERSION=2.7
-              - PIP_CMD=pip
 
         - os: osx
           language: generic
           env:
               - PY_VERSION=3.6
-              - PIP_CMD=pip
 
 before_install:
     - |
@@ -75,16 +71,16 @@ install:
         source venv/bin/activate;
         python2 --version;
         which python;
-        $PIP_CMD freeze;
+        pip freeze;
       fi
     - python --version
-    - $PIP_CMD --version
-    - $PIP_CMD install --upgrade pip wheel
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $PIP_CMD install -U py; fi  # for pytest
-    - $PIP_CMD install cython
+    - pip --version
+    - pip install --upgrade pip wheel
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install -U py; fi  # for pytest
+    - pip install cython
 
 before_script:
-    - $PIP_CMD freeze
+    - pip freeze
     - (cd fretwork && python setup.py sdist bdist_wheel)
 #    - (cd fretwork && pip wheel -w wheelhouse --no-deps .)
     - |
@@ -101,7 +97,7 @@ before_script:
             python --version
         fi
         ## install
-        $PIP_CMD install auditwheel
+        pip install auditwheel
         ## repair
         for whl in fretwork/dist/*.whl; do
             echo $whl
@@ -116,7 +112,7 @@ before_script:
       elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         # delocate
         ## install
-        $PIP_CMD install delocate
+        pip install delocate
         ## list lib dependencies
         delocate-listdeps fretwork/dist/*.whl
         echo in repair_wheelhouse, executing delocate-wheel
@@ -129,7 +125,7 @@ before_script:
       fi
 
 script:
-    - $PIP_CMD install out/*.whl
+    - pip install out/*.whl
 #    - python setup.py check
 #    - python setup.py sdist bdist_wheel
     - python -c "from fretwork import mixstream"
