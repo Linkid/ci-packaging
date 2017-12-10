@@ -71,9 +71,10 @@ install:
         python3 -m virtualenv venv;
         source venv/bin/activate;
       elif [[ "$PY_VERSION" == "2.7" ]]; then
-        python -m virtualenv venv;
+        python2 -m virtualenv venv;
         source venv/bin/activate;
-        python --version;
+        python2 --version;
+        which python;
         $PIP_CMD freeze;
       fi
     - python --version
