@@ -82,6 +82,7 @@ install:
     - $PIP_CMD install cython
 
 before_script:
+    - $PIP_CMD freeze
     - (cd fretwork && python setup.py sdist bdist_wheel)
 #    - (cd fretwork && pip wheel -w wheelhouse --no-deps .)
     - |
