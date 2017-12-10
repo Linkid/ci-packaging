@@ -92,7 +92,7 @@ before_script:
         PATCHELF_VERSION=6bfcafbba8d89e44f9ac9582493b4f27d9d8c369
         curl -sL -o patchelf.tar.gz https://github.com/NixOS/patchelf/archive/$PATCHELF_VERSION.tar.gz
         tar -xzf patchelf.tar.gz
-        (cd patchelf-$PATCHELF_VERSION && ./bootstrap.sh && ./configure && make && make install)
+        (cd patchelf-$PATCHELF_VERSION && ./bootstrap.sh && ./configure && make && sudo make install)
         rm -rf patchelf.tar.gz patchelf-$PATCHELF_VERSION
         ## install
         pip install auditwheel
