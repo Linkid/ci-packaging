@@ -22,13 +22,13 @@ matrix:
           language: generic
           env:
               - PY_VERSION=2.7
-              - PIP_CMD=pip
+              - PIP_CMD=pip2
 
         - os: osx
           language: generic
           env:
               - PY_VERSION=3.6
-              - PIP_CMD=pip2
+              - PIP_CMD=pip
 
 before_install:
     - |
