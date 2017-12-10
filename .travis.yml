@@ -79,46 +79,47 @@ install:
 before_script:
     - (cd fretwork && python setup.py sdist bdist_wheel)
 #    - (cd fretwork && pip wheel -w wheelhouse --no-deps .)
-    - |
-      if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        # auditwheel
-        ## install patchelf
-        wget https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2
-        tar -xjf patchelf-0.9.tar.bz2
-        (cd patchelf-0.9 && ./configure --prefix=/usr && make && sudo make install)
-        if [[ "$PY" == "2.7" ]]; then
-            ## python3 virtualenv
-            virtualenv -p python3 venv
-            source venv/bin/activate
-            python --version
-        fi
-        ## install
-        pip install auditwheel
-        ## repair
-        for whl in fretwork/dist/*.whl; do
-            echo $whl
-            auditwheel repair $whl -w out/
-        done
-        chmod -R a+rwX out
-        if [[ "$PY" == "2.7" ]]; then
-            deactivate
-            source ~/virtualenv/python2.7/bin/activate
-        fi
-
-      elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        # delocate
-        ## install
-        pip install delocate
-        ## list lib dependencies
-        delocate-listdeps fretwork/dist/*.whl
-        echo in repair_wheelhouse, executing delocate-wheel
-        ## copies lib dependencies into wheel
-        delocate-wheel fretwork/dist/*.whl
-        ## add platform tags
-        delocate-addplat --rm-orig -x 10_9 -x 10_10 fretwork/dist/*.whl
-        mv fretwork/dist out
-        echo `ls -l out`
-      fi
+#    - |
+#      if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+#        # auditwheel
+#        ## install patchelf
+#        wget https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2
+#        tar -xjf patchelf-0.9.tar.bz2
+#        (cd patchelf-0.9 && ./configure --prefix=/usr && make && sudo make install)
+#        if [[ "$PY" == "2.7" ]]; then
+#            ## python3 virtualenv
+#            virtualenv -p python3 venv
+#            source venv/bin/activate
+#            python --version
+#        fi
+#        ## install
+#        pip install auditwheel
+#        ## repair
+#        for whl in fretwork/dist/*.whl; do
+#            echo $whl
+#            auditwheel repair $whl -w out/
+#        done
+#        chmod -R a+rwX out
+#        if [[ "$PY" == "2.7" ]]; then
+#            deactivate
+#            source ~/virtualenv/python2.7/bin/activate
+#        fi
+#
+#      elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+#        # delocate
+#        ## install
+#        pip install delocate
+#        ## list lib dependencies
+#        delocate-listdeps fretwork/dist/*.whl
+#        echo in repair_wheelhouse, executing delocate-wheel
+#        ## copies lib dependencies into wheel
+#        delocate-wheel fretwork/dist/*.whl
+#        ## add platform tags
+#        delocate-addplat --rm-orig -x 10_9 -x 10_10 fretwork/dist/*.whl
+#        mv fretwork/dist out
+#        echo `ls -l out`
+#      fi
+    - mv fretwork/dist out
 
 script:
     - pip install out/*.whl
