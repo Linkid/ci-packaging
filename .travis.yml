@@ -74,6 +74,7 @@ install:
         python -m virtualenv venv;
         source venv/bin/activate;
         python --version;
+        $PIP_CMD freeze;
       fi
     - python --version
     - $PIP_CMD --version
