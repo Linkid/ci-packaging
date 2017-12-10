@@ -82,10 +82,10 @@ before_script:
     - |
       if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
         # auditwheel
-#        ## install patchelf
-#        wget https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2
-#        tar -xjf patchelf-0.9.tar.bz2
-#        (cd patchelf-0.9 && ./configure --prefix=/usr && make && sudo make install)
+        ### install patchelf
+        #wget https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2
+        #tar -xjf patchelf-0.9.tar.bz2
+        #(cd patchelf-0.9 && ./configure --prefix=/usr && make && sudo make install)
         if [[ "$PY" == "2.7" ]]; then
             ## python3 virtualenv
             virtualenv -p python3 venv
@@ -119,7 +119,7 @@ before_script:
         mv fretwork/dist out
         echo `ls -l out`
       fi
-    - mv fretwork/dist out
+#    - mv fretwork/dist out
 
 script:
     - pip install out/*.whl
