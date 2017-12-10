@@ -1,0 +1,81 @@
+version: 0.3.0.{build}
+
+environment:
+    global:
+        SDL_AUDIODRIVER: "disk"
+        MSYSTEM: MINGW64
+        # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
+        # /E:ON and /V:ON options are not enabled in the batch script intepreter
+        # See: http://stackoverflow.com/a/13751649/163740
+        #WITH_COMPILER: "cmd /E:ON /V:ON /C .\\appveyor\\run_with_compiler.cmd"
+
+    matrix:
+        - PYTHON: "C:\\Python27"
+          PYTHON_ARCH: 32
+          MSVC_VERSION: "Visual Studio 10"
+
+        - PYTHON: "C:\\Python36"
+          PYTHON_ARCH: 32
+          MSVC_VERSION: "Visual Studio 14"
+
+        - PYTHON: "C:\\Python27-x64"
+          PYTHON_ARCH: 64
+          MSVC_VERSION: "Visual Studio 10 Win64"
+
+        - PYTHON: "C:\\Python36-x64"
+          PYTHON_ARCH: 64
+          MSVC_VERSION: "Visual Studio 14 Win64"
+
+matrix:
+    fast_finish: true
+
+build: off
+
+init:
+    - "ECHO %PYTHON% %PYTHON_ARCH% %MSVC_VERSION%"
+    - "%PYTHON%\\python.exe --version"
+
+install:
+    # Put Python in PATH
+    - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+
+    # download and unzip sources
+    # https://github.com/vladimirgamalyan/sdl2_msvc_builds/blob/master/appveyor.yml
+    # SDL 1.2.15 dll
+    - appveyor DownloadFile https://www.libsdl.org/release/SDL-1.2.15-win32.zip
+    - 7z x SDL-1.2.15-win32.zip > nul
+    - appveyor DownloadFile https://www.libsdl.org/release/SDL-1.2.15-win32-x64.zip
+    - 7z x SDL-1.2.15-win32-x64.zip > nul
+
+    # SDL mixer 1.2.12
+    # https://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-1.2.12-win32.zip
+    # https://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-1.2.12-win32-x64.zip
+
+    # SDL image 1.2.12
+    # https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12-win32.zip
+    # https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12-win32-x64.zip
+
+    # SDL ttf 2.0.11
+    # https://www.libsdl.org/projects/SDL_ttf/release/SDL_ttf-2.0.11-win32.zip
+    # https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-2.0.14-win32-x64.zip
+
+    # Soundtouch 2.0.0
+    # https://www.surina.net/soundtouch/soundtouch_dll-2.0.0.zip
+
+    - "python -m pip install -U pip" # Upgrade pip
+    - "python -m pip install wheel"
+    - "python -m pip install cython"
+
+build_script:
+    - "CD fretwork"
+    - "python setup.py sdist bdist_wheel"
+
+test_script:
+    - "python -m pip install dist/*.whl"
+    - "python -m pip install pytest"
+    - "rm -rf fretwork"
+    - "pytest tests"
+    - "python -c 'from fretwork.mixstream import *'"
+
+artifacts:
+    - path: fretwork\dist\*
