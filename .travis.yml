@@ -69,9 +69,6 @@ install:
       elif [[ "$PY_VERSION" == "2.7" ]]; then
         python2 -m virtualenv venv;
         source venv/bin/activate;
-        python2 --version;
-        which python;
-        pip freeze;
       fi
     - python --version
     - pip --version
@@ -80,7 +77,6 @@ install:
     - pip install cython
 
 before_script:
-    - pip freeze
     - (cd fretwork && python setup.py sdist bdist_wheel)
 #    - (cd fretwork && pip wheel -w wheelhouse --no-deps .)
     - |
@@ -121,7 +117,7 @@ before_script:
         ## add platform tags
         delocate-addplat --rm-orig -x 10_9 -x 10_10 fretwork/dist/*.whl
         mv fretwork/dist out
-        echo `ls out`
+        echo `ls -l out`
       fi
 
 script:
