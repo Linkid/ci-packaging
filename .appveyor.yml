@@ -10,21 +10,37 @@ environment:
         #WITH_COMPILER: "cmd /E:ON /V:ON /C .\\appveyor\\run_with_compiler.cmd"
 
     matrix:
-        - PYTHON: "C:\\Python27"
-          PYTHON_ARCH: 32
-          MSVC_VERSION: "Visual Studio 10"
+        - MSYS2_ARCH: i686
+          MSYSTEM: MINGW32
+          PYTHON: "C:\\Python27"
 
-        - PYTHON: "C:\\Python36"
-          PYTHON_ARCH: 32
-          MSVC_VERSION: "Visual Studio 14"
+        - MSYS2_ARCH: x86_64
+          MSYSTEM: MINGW64
+          PYTHON: "C:\\Python27-x64"
 
-        - PYTHON: "C:\\Python27-x64"
-          PYTHON_ARCH: 64
-          MSVC_VERSION: "Visual Studio 10 Win64"
+        - MSYS2_ARCH: i686
+          MSYSTEM: MINGW32
+          PYTHON: "C:\\Python36"
 
-        - PYTHON: "C:\\Python36-x64"
-          PYTHON_ARCH: 64
-          MSVC_VERSION: "Visual Studio 14 Win64"
+        - MSYS2_ARCH: x86_64
+          MSYSTEM: MINGW64
+          PYTHON: "C:\\Python36-x64"
+
+#        - PYTHON: "C:\\Python27"
+#          PYTHON_ARCH: 32
+#          MSVC_VERSION: "Visual Studio 10"
+#
+#        - PYTHON: "C:\\Python36"
+#          PYTHON_ARCH: 32
+#          MSVC_VERSION: "Visual Studio 14"
+#
+#        - PYTHON: "C:\\Python27-x64"
+#          PYTHON_ARCH: 64
+#          MSVC_VERSION: "Visual Studio 10 Win64"
+#
+#        - PYTHON: "C:\\Python36-x64"
+#          PYTHON_ARCH: 64
+#          MSVC_VERSION: "Visual Studio 14 Win64"
 
 matrix:
     fast_finish: true
