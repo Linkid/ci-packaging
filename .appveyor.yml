@@ -58,10 +58,8 @@ install:
     # download and unzip sources
     # https://github.com/vladimirgamalyan/sdl2_msvc_builds/blob/master/appveyor.yml
     # SDL 1.2.15 dll
-    - appveyor DownloadFile https://www.libsdl.org/release/SDL-1.2.15-win32.zip
-    - 7z x SDL-1.2.15-win32.zip > nul
-    - appveyor DownloadFile https://www.libsdl.org/release/SDL-1.2.15-win32-x64.zip
-    - 7z x SDL-1.2.15-win32-x64.zip > nul
+    #- appveyor DownloadFile https://www.libsdl.org/release/SDL-1.2.15-win32.zip
+    #- 7z x SDL-1.2.15-win32.zip > nul
 
     # SDL mixer 1.2.12
     # https://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-1.2.12-win32.zip
