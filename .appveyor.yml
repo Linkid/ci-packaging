@@ -82,7 +82,8 @@ install:
 
 build_script:
     - "cd fretwork"
-    - "echo `ls`"
+    - "pwd"
+    - "dir"
     - "python setup.py sdist bdist_wheel"
 
 test_script:
