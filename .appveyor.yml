@@ -81,9 +81,11 @@ install:
     - "python -m pip install cython"
 
 build_script:
-    - "cd fretwork"
     - "pwd"
     - "dir"
+    - "cd fretwork"
+    - "dir"
+    - "pwd"
     - "python setup.py sdist bdist_wheel"
 
 test_script:
