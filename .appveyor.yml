@@ -79,6 +79,7 @@ install:
     - "python -m pip install -U pip" # Upgrade pip
     - "python -m pip install wheel"
     - "python -m pip install cython"
+    - "git submodule update --init"
 
 build_script:
     - "pwd"
