@@ -12,18 +12,22 @@ environment:
     matrix:
         - MSYS2_ARCH: i686
           MSYSTEM: MINGW32
+          PKG_PREFIX: "mingw-w64-i686"
           PYTHON: "C:\\Python27"
 
         - MSYS2_ARCH: x86_64
           MSYSTEM: MINGW64
+          PKG_PREFIX: "mingw-w64-x86_64"
           PYTHON: "C:\\Python27-x64"
 
         - MSYS2_ARCH: i686
           MSYSTEM: MINGW32
+          PKG_PREFIX: "mingw-w64-i686"
           PYTHON: "C:\\Python36"
 
         - MSYS2_ARCH: x86_64
           MSYSTEM: MINGW64
+          PKG_PREFIX: "mingw-w64-x86_64"
           PYTHON: "C:\\Python36-x64"
 
 #        - PYTHON: "C:\\Python27"
@@ -78,7 +82,6 @@ install:
 
 
     # system dependencies
-    - if %MSYSTEM% EQ "i686" (PKG_PREFIX="mingw-w64-x86_64") else (PKG_PREFIX="mingw-w64-i686")
     - "echo %PKG_PREFIX%"
     - pacman -Syu
     - pacman -S --no-confirm --needed --noprogressbar \
