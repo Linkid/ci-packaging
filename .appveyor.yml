@@ -42,8 +42,8 @@ environment:
 #          PYTHON_ARCH: 64
 #          MSVC_VERSION: "Visual Studio 14 Win64"
 
-matrix:
-    fast_finish: true
+#matrix:
+#    fast_finish: true
 
 build: off
 
