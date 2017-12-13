@@ -76,6 +76,15 @@ install:
     # Soundtouch 2.0.0
     # https://www.surina.net/soundtouch/soundtouch_dll-2.0.0.zip
 
+
+    # system dependencies
+    - if %MSYSTEM% EQ "i686" (PKG_PREFIX="mingw-w64-x86_64") else (PKG_PREFIX="mingw-w64-i686")
+    - "echo %PKG_PREFIX%"
+    - pacman -Syu
+    - pacman -S --no-confirm --needed --noprogressbar \
+        %PKG_PREFIX%-pkg-config
+
+    # python dependencies
     - "python -m pip install -U pip" # Upgrade pip
     - "python -m pip install wheel"
     - "python -m pip install cython"
