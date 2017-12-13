@@ -79,7 +79,9 @@ install:
     - "python -m pip install -U pip" # Upgrade pip
     - "python -m pip install wheel"
     - "python -m pip install cython"
-    - "git submodule update --init"
+
+    # git submodule
+    - "git submodule update --init --recursive"
 
 build_script:
     - "pwd"
