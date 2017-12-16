@@ -91,7 +91,8 @@ install:
     - bash -lc "pacman -Syu --noconfirm"
     - bash -lc "pacman -S --noconfirm --needed --noprogressbar
         %PKG_PREFIX%-pkg-config
-        %PKG_PREFIX%-%PYTHON_VERSION%"
+        %PKG_PREFIX%-%PYTHON_VERSION%
+        %PKG_PREFIX%-%PYTHON_VERSION%-pip"
 
     # python dependencies
     - bash -lc "python -m pip install -U pip" # Upgrade pip
