@@ -99,26 +99,24 @@ install:
     - bash -lc "ls C:/msys64/mingw64/bin/"
     - bash -lc "ls C:/msys64/usr/bin/"
 
-#    # python dependencies
-#    - bash -lc "%PYTHON_VERSION% --version"
-#    - bash -lc "%PYTHON_VERSION% -m pip install -U pip" # Upgrade pip
-#    - bash -lc "%PYTHON_VERSION% -m pip install wheel"
-#    - bash -lc "%PYTHON_VERSION% -m pip install cython"
-#
-#    # git submodule
-#    - "git submodule update --init --recursive"
-#    - sed -e "s/os.name == 'nt'/os.name == 'nothing'/g" -i "C:/projects/ci-packaging/fretwork/setup.py"
-#    - bash -lc "cat C:/projects/ci-packaging/fretwork/setup.py"
-#
-#build_script:
-#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% setup.py sdist bdist_wheel"
-#
-#test_script:
-#    - "python -m pip install dist/*.whl"
-#    - "python -m pip install pytest"
-#    - "rm -rf fretwork"
-#    - "pytest tests"
-#    - "python -c 'from fretwork.mixstream import *'"
-#
-#artifacts:
-#    - path: fretwork\dist\*
+    # python dependencies
+    - bash -lc "%PYTHON_VERSION% --version"
+    - bash -lc "%PYTHON_VERSION% -m pip install -U pip" # Upgrade pip
+    - bash -lc "%PYTHON_VERSION% -m pip install wheel"
+    - bash -lc "%PYTHON_VERSION% -m pip install cython"
+
+    # git submodule
+    - "git submodule update --init --recursive"
+
+build_script:
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% setup.py sdist bdist_wheel"
+
+test_script:
+    - "python -m pip install dist/*.whl"
+    - "python -m pip install pytest"
+    - "rm -rf fretwork"
+    - "pytest tests"
+    - "python -c 'from fretwork.mixstream import *'"
+
+artifacts:
+    - path: fretwork\dist\*
