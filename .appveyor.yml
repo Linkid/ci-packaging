@@ -84,8 +84,8 @@ install:
 
     # system dependencies
     - "echo %PKG_PREFIX%"
-    - '%MSYS2_PATH%\usr\bin\bash -lc "pacman -Syu --no-confirm"'
-    - '%MSYS2_PATH%\usr\bin\bash -lc "pacman -S --no-confirm --needed --noprogressbar \
+    - '%MSYS2_PATH%\usr\bin\bash -lc "pacman -Syu --noconfirm"'
+    - '%MSYS2_PATH%\usr\bin\bash -lc "pacman -S --noconfirm --needed --noprogressbar \
         %PKG_PREFIX%-pkg-config"'
 
     # python dependencies
