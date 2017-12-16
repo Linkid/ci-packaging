@@ -98,7 +98,7 @@ install:
 
 build_script:
     - "cd fretwork"
-    - '%MSYS2_PATH%\usr\bin\bash -lc "python setup.py sdist bdist_wheel"'
+    - '%MSYS2_PATH%\usr\bin\bash -lc "cd fretwork && python setup.py sdist bdist_wheel"'
 
 test_script:
     - "python -m pip install dist/*.whl"
