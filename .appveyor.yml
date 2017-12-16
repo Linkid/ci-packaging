@@ -107,6 +107,7 @@ build_script:
     - bash -lc "cd C:/projects/ci-packaging/fretwork"
     - pwd
     - dir
+    - bash -lc "pwd"
     - bash -lc "%PYTHON_VERSION% setup.py sdist bdist_wheel"
 
 test_script:
