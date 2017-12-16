@@ -105,9 +105,9 @@ install:
 
 build_script:
     - bash -lc "cd C:/projects/ci-packaging/fretwork"
-    - bash -lc "%PYTHON_VERSION% setup.py sdist bdist_wheel"
     - pwd
     - dir
+    - bash -lc "%PYTHON_VERSION% setup.py sdist bdist_wheel"
 
 test_script:
     - "python -m pip install dist/*.whl"
