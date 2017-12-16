@@ -91,10 +91,10 @@ install:
     - pacman -Syu --noconfirm
     - pacman --noconfirm --needed -Sy bash pacman pacman-mirrors msys2-runtime msys2-runtime-devel
     - bash -lc "pacman -S --noconfirm --needed --noprogressbar
-        base-devel
-        %PKG_PREFIX%-pkg-config
         %PKG_PREFIX%-%PYTHON_VERSION%
-        %PKG_PREFIX%-%PYTHON_VERSION%-pip"
+        %PKG_PREFIX%-%PYTHON_VERSION%-pip
+        %PKG_PREFIX%-pkg-config
+        %PKG_PREFIX%-libvorbis"
 #    - bash -lc "ls C:/msys64/mingw32/bin/"
 #    - bash -lc "ls C:/msys64/mingw64/bin/"
 #    - bash -lc "ls C:/msys64/usr/bin/"
