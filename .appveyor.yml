@@ -54,6 +54,7 @@ build: off
 init:
     - "ECHO %PYTHON% %PYTHON_ARCH% %MSVC_VERSION%"
     - "%PYTHON%\\python.exe --version"
+    - set MSYS2_PATH=c:\msys64
 
 install:
     # Put Python in PATH
@@ -83,9 +84,9 @@ install:
 
     # system dependencies
     - "echo %PKG_PREFIX%"
-    - pacman -Syu
-    - pacman -S --no-confirm --needed --noprogressbar \
-        %PKG_PREFIX%-pkg-config
+    - '%MSYS2_PATH%\usr\bin\bash -lc "pacman -Syu"'
+    - '%MSYS2_PATH%\usr\bin\bash -lc "pacman -S --no-confirm --needed --noprogressbar \
+        %PKG_PREFIX%-pkg-config"'
 
     # python dependencies
     - "python -m pip install -U pip" # Upgrade pip
