@@ -95,8 +95,8 @@ install:
 
     # python dependencies
     - bash -lc "python -m pip install -U pip" # Upgrade pip
-    - bash -lc ""python -m pip install wheel"
-    - bash -lc ""python -m pip install cython"
+    - bash -lc "python -m pip install wheel"
+    - bash -lc "python -m pip install cython"
 
     # git submodule
     - "git submodule update --init --recursive"
