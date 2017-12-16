@@ -12,24 +12,28 @@ environment:
     matrix:
         - MSYS2_ARCH: i686
           MSYSTEM: MINGW32
+          MSYSTEM_: mingw32
           PKG_PREFIX: "mingw-w64-i686"
           PYTHON: "C:\\Python27"
           PYTHON_VERSION: "python2"
 
         - MSYS2_ARCH: x86_64
           MSYSTEM: MINGW64
+          MSYSTEM_: mingw64
           PKG_PREFIX: "mingw-w64-x86_64"
           PYTHON: "C:\\Python27-x64"
           PYTHON_VERSION: "python2"
 
         - MSYS2_ARCH: i686
           MSYSTEM: MINGW32
+          MSYSTEM_: mingw32
           PKG_PREFIX: "mingw-w64-i686"
           PYTHON: "C:\\Python36"
           PYTHON_VERSION: "python3"
 
         - MSYS2_ARCH: x86_64
           MSYSTEM: MINGW64
+          MSYSTEM_: mingw64
           PKG_PREFIX: "mingw-w64-x86_64"
           PYTHON: "C:\\Python36-x64"
           PYTHON_VERSION: "python3"
@@ -95,9 +99,9 @@ install:
         %PKG_PREFIX%-%PYTHON_VERSION%-pip
         %PKG_PREFIX%-pkg-config
         %PKG_PREFIX%-libvorbis"
-#    - bash -lc "ls C:/msys64/mingw32/bin/"
-#    - bash -lc "ls C:/msys64/mingw64/bin/"
-#    - bash -lc "ls C:/msys64/usr/bin/"
+    - bash -lc "ls C:/msys64/mingw32/bin/"
+    - bash -lc "ls C:/msys64/mingw64/bin/"
+    - bash -lc "ls C:/msys64/usr/bin/"
 
     # python dependencies
     - bash -lc "%PYTHON_VERSION% --version"
@@ -109,7 +113,8 @@ install:
     - "git submodule update --init --recursive"
 
     # link
-    - bash -lc "ln -s C:/msys64/usr/ C:/projects/ci-packaging/fretwork/win32/deps"
+#    - bash -lc "ln -s C:/msys64/usr/ C:/projects/ci-packaging/fretwork/win32/deps"
+    - bash -lc "ln -s C:/msys64/%MSYSTEM_% C:/projects/ci-packaging/fretwork/win32/deps"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
 
 build_script:
