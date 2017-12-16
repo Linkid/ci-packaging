@@ -14,25 +14,25 @@ environment:
           MSYSTEM: MINGW32
           PKG_PREFIX: "mingw-w64-i686"
           PYTHON: "C:\\Python27"
-          PYTHON_VERIONS: "python2"
+          PYTHON_VERSION: "python2"
 
         - MSYS2_ARCH: x86_64
           MSYSTEM: MINGW64
           PKG_PREFIX: "mingw-w64-x86_64"
           PYTHON: "C:\\Python27-x64"
-          PYTHON_VERIONS: "python2"
+          PYTHON_VERSION: "python2"
 
         - MSYS2_ARCH: i686
           MSYSTEM: MINGW32
           PKG_PREFIX: "mingw-w64-i686"
           PYTHON: "C:\\Python36"
-          PYTHON_VERIONS: "python3"
+          PYTHON_VERSION: "python3"
 
         - MSYS2_ARCH: x86_64
           MSYSTEM: MINGW64
           PKG_PREFIX: "mingw-w64-x86_64"
           PYTHON: "C:\\Python36-x64"
-          PYTHON_VERIONS: "python3"
+          PYTHON_VERSION: "python3"
 
 #        - PYTHON: "C:\\Python27"
 #          PYTHON_ARCH: 32
