@@ -14,21 +14,25 @@ environment:
           MSYSTEM: MINGW32
           PKG_PREFIX: "mingw-w64-i686"
           PYTHON: "C:\\Python27"
+          PYTHON_VERIONS: "python2"
 
         - MSYS2_ARCH: x86_64
           MSYSTEM: MINGW64
           PKG_PREFIX: "mingw-w64-x86_64"
           PYTHON: "C:\\Python27-x64"
+          PYTHON_VERIONS: "python2"
 
         - MSYS2_ARCH: i686
           MSYSTEM: MINGW32
           PKG_PREFIX: "mingw-w64-i686"
           PYTHON: "C:\\Python36"
+          PYTHON_VERIONS: "python3"
 
         - MSYS2_ARCH: x86_64
           MSYSTEM: MINGW64
           PKG_PREFIX: "mingw-w64-x86_64"
           PYTHON: "C:\\Python36-x64"
+          PYTHON_VERIONS: "python3"
 
 #        - PYTHON: "C:\\Python27"
 #          PYTHON_ARCH: 32
@@ -54,7 +58,7 @@ build: off
 init:
     - "ECHO %PYTHON% %PYTHON_ARCH% %MSVC_VERSION%"
     - "%PYTHON%\\python.exe --version"
-    - set MSYS2_PATH=c:\msys64
+    - PATH C:\msys64\%MSYSTEM%\bin;C:\msys64\usr\bin;C:\msys64\bin;%PATH%
 
 install:
     # Put Python in PATH
@@ -86,7 +90,8 @@ install:
     - "echo %PKG_PREFIX%"
     - '%MSYS2_PATH%\usr\bin\bash -lc "pacman -Syu --noconfirm"'
     - '%MSYS2_PATH%\usr\bin\bash -lc "pacman -S --noconfirm --needed --noprogressbar
-        %PKG_PREFIX%-pkg-config"'
+        %PKG_PREFIX%-pkg-config"
+        %PKG_PREFIX%-%PYTHON_VERSION%"'
 
     # python dependencies
     - '%MSYS2_PATH%\usr\bin\bash -lc "python -m pip install -U pip"' # Upgrade pip
