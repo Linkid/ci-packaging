@@ -109,7 +109,7 @@ install:
     - "git submodule update --init --recursive"
 
     # link
-    - bash -lc "ln -s C:/msys64/usr/ C:/projects/ci-packaging/fretwork/win32/deps/"
+    - bash -lc "ln -s C:/msys64/usr/ C:/projects/ci-packaging/fretwork/win32/deps"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/"
 
 build_script:
