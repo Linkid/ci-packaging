@@ -95,6 +95,7 @@ install:
         %PKG_PREFIX%-%PYTHON_VERSION%-pip"
 
     # python dependencies
+    - bash -lc "%PYTHON_VERSION% --version"
     - bash -lc "%PYTHON_VERSION% -m pip install -U pip" # Upgrade pip
     - bash -lc "%PYTHON_VERSION% -m pip install wheel"
     - bash -lc "%PYTHON_VERSION% -m pip install cython"
