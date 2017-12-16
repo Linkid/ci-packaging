@@ -95,9 +95,9 @@ install:
         %PKG_PREFIX%-pkg-config
         %PKG_PREFIX%-%PYTHON_VERSION%
         %PKG_PREFIX%-%PYTHON_VERSION%-pip"
-    - bash -lc "ls C:/msys64/mingw32/bin/"
-    - bash -lc "ls C:/msys64/mingw64/bin/"
-    - bash -lc "ls C:/msys64/usr/bin/"
+#    - bash -lc "ls C:/msys64/mingw32/bin/"
+#    - bash -lc "ls C:/msys64/mingw64/bin/"
+#    - bash -lc "ls C:/msys64/usr/bin/"
 
     # python dependencies
     - bash -lc "%PYTHON_VERSION% --version"
