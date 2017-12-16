@@ -89,7 +89,9 @@ install:
     # system dependencies
     - "echo %PKG_PREFIX%"
     - pacman -Syu --noconfirm
+    - pacman --noconfirm --needed -Sy bash pacman pacman-mirrors msys2-runtime msys2-runtime-devel
     - bash -lc "pacman -S --noconfirm --needed --noprogressbar
+        base-devel
         %PKG_PREFIX%-pkg-config
         %PKG_PREFIX%-%PYTHON_VERSION%
         %PKG_PREFIX%-%PYTHON_VERSION%-pip"
