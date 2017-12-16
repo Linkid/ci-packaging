@@ -89,9 +89,9 @@ install:
         %PKG_PREFIX%-pkg-config"'
 
     # python dependencies
-    - "python -m pip install -U pip" # Upgrade pip
-    - "python -m pip install wheel"
-    - "python -m pip install cython"
+    - '%MSYS2_PATH%\usr\bin\bash -lc "python -m pip install -U pip"' # Upgrade pip
+    - '%MSYS2_PATH%\usr\bin\bash -lc ""python -m pip install wheel"'
+    - '%MSYS2_PATH%\usr\bin\bash -lc ""python -m pip install cython"'
 
     # git submodule
     - "git submodule update --init --recursive"
@@ -99,6 +99,8 @@ install:
 build_script:
     - "cd fretwork"
     - '%MSYS2_PATH%\usr\bin\bash -lc "cd C:/projects/ci-packaging/fretwork && python setup.py sdist bdist_wheel"'
+    - pwd
+    - dir
 
 test_script:
     - "python -m pip install dist/*.whl"
