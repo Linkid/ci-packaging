@@ -58,7 +58,7 @@ build: off
 init:
     - "ECHO %PYTHON% %PYTHON_ARCH% %MSVC_VERSION%"
     - "%PYTHON%\\python.exe --version"
-    - PATH C:\msys64\%MSYSTEM%\bin;C:\msys64\usr\bin;C:\msys64\bin;%PATH%
+    - set "PATH C:\msys64\%MSYSTEM%\bin;C:\msys64\usr\bin;C:\msys64\bin;%PATH%"
 
 install:
     # Put Python in PATH
@@ -88,7 +88,7 @@ install:
 
     # system dependencies
     - "echo %PKG_PREFIX%"
-    - bash -lc "pacman -Syu --noconfirm"
+    - pacman -Syu --noconfirm
     - bash -lc "pacman -S --noconfirm --needed --noprogressbar
         %PKG_PREFIX%-pkg-config
         %PKG_PREFIX%-%PYTHON_VERSION%
