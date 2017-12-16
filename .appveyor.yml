@@ -105,7 +105,7 @@ install:
 
     # git submodule
     - "git submodule update --init --recursive"
-    - bash -lc "sed -e 's/os.name == \'nt\'/os.name == \'nothing\'/g' -i C:/projects/ci-packaging/fretwork/setup.py"
+    - sed -e "s/os.name == 'nt'/os.name == 'nothing'/g" -i "C:/projects/ci-packaging/fretwork/setup.py"
     - bash -lc "cat C:/projects/ci-packaging/fretwork/setup.py"
 
 build_script:
