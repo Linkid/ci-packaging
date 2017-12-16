@@ -95,16 +95,16 @@ install:
         %PKG_PREFIX%-%PYTHON_VERSION%-pip"
 
     # python dependencies
-    - bash -lc "python -m pip install -U pip" # Upgrade pip
-    - bash -lc "python -m pip install wheel"
-    - bash -lc "python -m pip install cython"
+    - bash -lc "%PYTHON_VERSION% -m pip install -U pip" # Upgrade pip
+    - bash -lc "%PYTHON_VERSION% -m pip install wheel"
+    - bash -lc "%PYTHON_VERSION% -m pip install cython"
 
     # git submodule
     - "git submodule update --init --recursive"
 
 build_script:
     - bash -lc "cd C:/projects/ci-packaging/fretwork"
-    - bash -lc "python setup.py sdist bdist_wheel"
+    - bash -lc "%PYTHON_VERSION% setup.py sdist bdist_wheel"
     - pwd
     - dir
 
