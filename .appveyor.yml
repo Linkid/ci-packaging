@@ -141,7 +141,9 @@ install:
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
 
 build_script:
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% setup.py sdist bdist_wheel"
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% setup.py sdist"
+    - bash -lc "ls C:/projects/ci-packaging/fretwork/*"
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% setup.py bdist_wheel"
 
 test_script:
     - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install dist/*.whl"
