@@ -95,6 +95,7 @@ install:
     - pacman -Syu --noconfirm
     - pacman --noconfirm --needed -Sy bash pacman pacman-mirrors msys2-runtime msys2-runtime-devel
     - bash -lc "pacman -S --noconfirm --needed --noprogressbar
+        %PKG_PREFIX%-toolchain
         %PKG_PREFIX%-%PYTHON_VERSION%
         %PKG_PREFIX%-%PYTHON_VERSION%-pip
         %PKG_PREFIX%-pkg-config
@@ -125,6 +126,10 @@ install:
     - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libiconv-2.dll C:/projects/ci-packaging/fretwork/win32/deps/bin/iconv.dll"
     - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libSoundTouch-1.dll C:/projects/ci-packaging/fretwork/win32/deps/bin/libSoundTouch-0.dll"
     - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libSDL_mixer-1-2-0.dll C:/projects/ci-packaging/fretwork/win32/deps/bin/SDL_mixer.dll"
+    # soundtouch-c
+    - bash -lc "%MSYS2_ARCH%-w64-mingw32-g++ -g -O2 -W -Wall `pkg-config --cflags glib-2.0 soundtouch` -fno-exceptions -fno-rtti -c -o soundtouch-c.o C:/projects/ci-packaging/fretwork/fretwork/mixstream/soundtouch-c.cpp"
+
+    # debug
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
 
