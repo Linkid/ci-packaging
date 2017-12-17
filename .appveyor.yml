@@ -66,7 +66,7 @@ init:
 
 install:
     # Put Python in PATH
-    - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+    #- "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
 
     # download and unzip sources
     # https://github.com/vladimirgamalyan/sdl2_msvc_builds/blob/master/appveyor.yml
