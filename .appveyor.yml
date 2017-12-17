@@ -124,6 +124,7 @@ install:
     - bash -lc "ln -s C:/msys64/%MSYSTEM_% C:/projects/ci-packaging/fretwork/win32/deps"
     - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libiconv-2.dll C:/projects/ci-packaging/fretwork/win32/deps/bin/iconv.dll"
     - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libSoundTouch-1.dll C:/projects/ci-packaging/fretwork/win32/deps/bin/libSoundTouch-0.dll"
+    - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libSDL_mixer-1-2-0.dll C:/projects/ci-packaging/fretwork/win32/deps/bin/SDL_mixer.dll"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
 
