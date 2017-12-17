@@ -97,6 +97,7 @@ install:
     - bash -lc "pacman -S --noconfirm --needed --noprogressbar
         autoconf
         automake
+        base-devel
         %PKG_PREFIX%-toolchain
         %PKG_PREFIX%-%PYTHON_VERSION%
         %PKG_PREFIX%-%PYTHON_VERSION%-pip
