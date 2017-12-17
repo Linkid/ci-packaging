@@ -140,6 +140,10 @@ install:
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
 
+    # path
+    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\bin;%PATH%"
+    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\lib;%PATH%"
+
 build_script:
     - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% setup.py sdist"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/*"
