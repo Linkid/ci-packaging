@@ -154,11 +154,11 @@ build_script:
 #
 #test_script:
 #    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install dist/*.whl"
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install dist/fretwork-0.3.0.tar.gz"
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install pytest"
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && rm -rf fretwork"
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && pytest tests"
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && python -c 'from fretwork.mixstream import *'"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install dist/fretwork-0.3.0.tar.gz"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install pytest"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && rm -rf fretwork"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && pytest tests"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && python -c 'from fretwork.mixstream import *'"
 
 artifacts:
     - path: fretwork\dist\*
