@@ -134,6 +134,7 @@ install:
     - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib"
     - bash -lc "ar cru C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib soundtouch-c.o"
     - bash -lc "ranlib C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib"
+    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.o"
 
     # debug
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
@@ -143,11 +144,11 @@ build_script:
     - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% setup.py sdist bdist_wheel"
 
 test_script:
-    - "python -m pip install dist/*.whl"
-    - "python -m pip install pytest"
-    - "rm -rf fretwork"
-    - "pytest tests"
-    - "python -c 'from fretwork.mixstream import *'"
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install dist/*.whl"
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install pytest"
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && rm -rf fretwork"
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && pytest tests"
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && python -c 'from fretwork.mixstream import *'"
 
 artifacts:
     - path: fretwork\dist\*
