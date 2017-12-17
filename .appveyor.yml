@@ -121,6 +121,7 @@ install:
 #    - bash -lc "ln -s C:/msys64/usr/ C:/projects/ci-packaging/fretwork/win32/deps"
     - bash -lc "ln -s C:/msys64/%MSYSTEM_% C:/projects/ci-packaging/fretwork/win32/deps"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
+    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
 
 build_script:
     - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% setup.py sdist bdist_wheel"
