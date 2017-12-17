@@ -143,20 +143,20 @@ install:
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
 
     # path
-    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\bin;%PATH%"
-    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\lib;%PATH%"
+#    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\bin;%PATH%"
+#    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\lib;%PATH%"
 
 build_script:
     - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% setup.py sdist"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/*"
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% setup.py bdist_wheel"
-
-test_script:
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install dist/*.whl"
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install pytest"
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && rm -rf fretwork"
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && pytest tests"
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && python -c 'from fretwork.mixstream import *'"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% setup.py bdist_wheel"
+#
+#test_script:
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install dist/*.whl"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install pytest"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && rm -rf fretwork"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && pytest tests"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && python -c 'from fretwork.mixstream import *'"
 
 artifacts:
     - path: fretwork\dist\*
