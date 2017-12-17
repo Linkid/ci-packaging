@@ -102,7 +102,8 @@ install:
         %PKG_PREFIX%-SDL
         %PKG_PREFIX%-SDL_image
         %PKG_PREFIX%-SDL_mixer
-        %PKG_PREFIX%-SDL_ttf"
+        %PKG_PREFIX%-SDL_ttf
+        %PKG_PREFIX%-soundtouch"
 #    - bash -lc "ls C:/msys64/mingw32/bin/"
 #    - bash -lc "ls C:/msys64/mingw64/bin/"
 #    - bash -lc "ls C:/msys64/usr/bin/"
