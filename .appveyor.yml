@@ -122,6 +122,7 @@ install:
 #    - bash -lc "ln -s C:/msys64/usr/ C:/projects/ci-packaging/fretwork/win32/deps"
     - bash -lc "ln -s C:/msys64/%MSYSTEM_% C:/projects/ci-packaging/fretwork/win32/deps"
     - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libiconv-2.dll C:/projects/ci-packaging/fretwork/win32/deps/bin/iconv.dll"
+    - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libSoundTouch-1.dll C:/projects/ci-packaging/fretwork/win32/deps/bin/libSoundTouch-0.dll"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
 
