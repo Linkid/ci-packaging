@@ -130,8 +130,8 @@ install:
     - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libSDL_mixer-1-2-0.dll C:/projects/ci-packaging/fretwork/win32/deps/bin/SDL_mixer.dll"
 
     # soundtouch-c
-    - bash -lc "%MSYS2_ARCH%-w64-mingw32-pkg-config --cflags glib-2.0 soundtouch"
     - bash -lc "%MSYS2_ARCH%-w64-mingw32-g++ -g -O2 -W -Wall `%MSYS2_ARCH%-w64-mingw32-pkg-config --cflags glib-2.0 soundtouch` -fno-exceptions -fno-rtti -c -o soundtouch-c.o C:/projects/ci-packaging/fretwork/fretwork/mixstream/soundtouch-c.cpp"
+    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib"
     - bash -lc "ar cru C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib soundtouch-c.o"
     - bash -lc "ranlib C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib"
 
