@@ -95,8 +95,8 @@ install:
     - pacman -Syu --noconfirm
     - pacman --noconfirm --needed -Sy bash pacman pacman-mirrors msys2-runtime msys2-runtime-devel
     - bash -lc "pacman -S --noconfirm --needed --noprogressbar
-        %PKG_PREFIX%-autoconf
-        %PKG_PREFIX%-automake
+        autoconf
+        automake
         %PKG_PREFIX%-toolchain
         %PKG_PREFIX%-%PYTHON_VERSION%
         %PKG_PREFIX%-%PYTHON_VERSION%-pip
