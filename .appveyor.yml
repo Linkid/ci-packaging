@@ -99,6 +99,7 @@ install:
         %PKG_PREFIX%-%PYTHON_VERSION%-pip
         %PKG_PREFIX%-pkg-config
         %PKG_PREFIX%-libvorbis
+        %PKG_PREFIX%-libtheora
         %PKG_PREFIX%-SDL
         %PKG_PREFIX%-SDL_image
         %PKG_PREFIX%-SDL_mixer
