@@ -25,7 +25,8 @@ function pre_build {
     build_simple SDL_ttf 2.0.11 http://www.libsdl.org/projects/SDL_ttf/release/ tar.gz
     build_simple SDL_image 1.2.12 http://www.libsdl.org/projects/SDL_image/release/ tar.gz
     ls
-    (cd fretwork && python setup.py build_ext --inplace --force)
+    #pip install cython
+    #(cd fretwork && python setup.py build_ext --inplace --force)
 }
 
 function fetch_xz {
