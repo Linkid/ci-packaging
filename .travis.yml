@@ -3,7 +3,7 @@ env:
         - REPO_DIR=fretwork
         - BUILD_COMMIT=0.3.0
         # pip dependencies
-        - BUILD_DEPENDS="Cython Pillow Pygame PyOpenGL numpy"
+        - BUILD_DEPENDS="Cython Pygame PyOpenGL numpy"
         # pip dependencies for tests
         - TEST_DEPENDS="pytest"
         - PLAT=x86_64
