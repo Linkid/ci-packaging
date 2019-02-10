@@ -9,7 +9,7 @@ function pre_build {
     build_libpng
     build_jpeg
     #build_simple gettext 0.19.8.1 http://ftp.gnu.org/gnu/gettext/ tar.gz
-    build_gettext
+    #build_gettext
     build_simple libffi 3.2.1 ftp://sourceware.org/pub/libffi/ tar.gz --enable-portable-binary
     build_glib 2.54.2 http://ftp.gnome.org/pub/GNOME/sources/glib/2.54/ tar.xz
     #build_simple pkg-config 0.29.2 http://pkgconfig.freedesktop.org/releases/ tar.gz
