@@ -98,7 +98,6 @@ install:
         autoconf
         automake
         base-devel
-        %PKG_PREFIX%-binutils
         %PKG_PREFIX%-toolchain
         %PKG_PREFIX%-%PYTHON_VERSION%
         %PKG_PREFIX%-%PYTHON_VERSION%-pip
@@ -137,7 +136,7 @@ install:
     - bash -lc "ls"
     - bash -lc "pwd"
     - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib"
-    - bash -lc "%MSYS2_ARCH%-w64-mingw32-ar cru C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib soundtouch-c.o"
+    - bash -lc "ar cru C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib soundtouch-c.o"
     #- bash -lc "%MSYS2_ARCH%-w64-mingw32-ranlib C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib"
     #- bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.o"
     #- bash -lc "cp C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib C:/msys64/%MSYSTEM_%/lib"
