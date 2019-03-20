@@ -18,7 +18,8 @@ install:
     - 7z x xxx.zip
     - dir
     - dir fofix-win32-deppack-20130304-updated
-    - move fofix-win32-deppack-20130304-updated\* fretwork\win32\
+    - dir fofix-win32-deppack-20130304-updated\deps
+    - move fofix-win32-deppack-20130304-updated\deps fretwork\win32\
     - dir fretwork\win32\
     - xcopy build.cmd fretwork\
     
