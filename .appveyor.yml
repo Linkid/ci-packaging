@@ -28,9 +28,9 @@ build: off
 
 build_script:
     - cd fretwork
-    - "..\build.cmd %PYTHON%\\python.exe -m setup.py build_ext --inplace --force"
-    - "..\build.cmd %PYTHON%\\python.exe -m setup.py sdist"
-    - "..\build.cmd %PYTHON%\\python.exe -m setup.py bdist_wheel"
+    - "C:\\projects\\ci-packaging\\build.cmd %PYTHON%\\python.exe -m setup.py build_ext --inplace --force"
+    - "C:\\projects\\ci-packaging\\build.cmd %PYTHON%\\python.exe -m setup.py sdist"
+    - "C:\\projects\\ci-packaging\\build.cmd %PYTHON%\\python.exe -m setup.py bdist_wheel"
 
 
 artifacts:
