@@ -15,7 +15,7 @@ install:
 
     # get windows deps
     - curl -fsSL -o xxx.zip http://fofix.net/downloads/fofix-win32-deppack-20130304-updated.zip
-    - 7z xxx.zip fretwork\win32\
+    - 7z x xxx.zip -o fretwork\win32\
 
     # We need wheel installed to build wheels
     - "%PYTHON%\\python.exe -m pip install wheel"
