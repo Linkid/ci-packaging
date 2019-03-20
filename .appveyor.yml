@@ -16,6 +16,7 @@ install:
     # get windows deps
     - curl -fsSL -o xxx.zip http://fofix.net/downloads/fofix-win32-deppack-20130304-updated.zip
     - 7z x xxx.zip -ofretwork\win32\
+    - dir fretwork\win32\
 
     # We need wheel installed to build wheels
     - "%PYTHON%\\python.exe -m pip install wheel"
@@ -27,9 +28,9 @@ build: off
 
 build_script:
     - cd fretwork
-    - "build.cmd %PYTHON%\\python.exe -m setup.py build_ext --inplace --force"
-    - "build.cmd %PYTHON%\\python.exe -m setup.py sdist"
-    - "build.cmd %PYTHON%\\python.exe -m setup.py bdist_wheel"
+    - "..\build.cmd %PYTHON%\\python.exe -m setup.py build_ext --inplace --force"
+    - "..\build.cmd %PYTHON%\\python.exe -m setup.py sdist"
+    - "..\build.cmd %PYTHON%\\python.exe -m setup.py bdist_wheel"
 
 
 artifacts:
