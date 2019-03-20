@@ -15,7 +15,9 @@ install:
 
     # get windows deps
     - curl -fsSL -o xxx.zip http://fofix.net/downloads/fofix-win32-deppack-20130304-updated.zip
-    - 7z x xxx.zip -ofretwork\win32\
+    - 7z x xxx.zip
+    - dir
+    - move fofix-win32-deppack-20130304-updated fretwork\win32\
     - dir fretwork\win32\
     - xcopy build.cmd fretwork\
     
