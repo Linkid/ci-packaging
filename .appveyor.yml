@@ -1,4 +1,4 @@
-version: 0.4.0.{build}
+version: 0.4.1.{build}
 
 environment:
     global:
@@ -22,7 +22,6 @@ install:
     - move fofix-win32-deppack-20130304-updated\deps fretwork\win32\
     - dir fretwork\win32\
     - xcopy build.cmd fretwork\
-    
 
     # We need wheel installed to build wheels
     - "%PYTHON%\\python.exe -m pip install wheel"
