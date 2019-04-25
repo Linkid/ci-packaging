@@ -33,8 +33,11 @@ build: off
 
 build_script:
     - cd fretwork
+    - dir
     - "build.cmd %PYTHON%\\python.exe -m setup.py build_ext --inplace --force"
+    - dir
     - "build.cmd %PYTHON%\\python.exe -m setup.py sdist"
+    - dir
     - "build.cmd %PYTHON%\\python.exe -m setup.py bdist_wheel"
 
 
