@@ -17,7 +17,7 @@ install:
     #- curl -fsSL -o xxx.zip http://fofix.net/downloads/fofix-win32-deppack-20130304-updated.zip
     #- 7z x xxx.zip
     # https://superuser.com/a/546694/562968
-    - curl -fsSL -o xxx.tar.gz https://github.com/fofix/win-dependencies/releases/download/untagged-4e0fa2534b0bd145f1ed/fretwork-win32-deppack-20190425.tar.gz
+    - curl -fsSL -o xxx.tar.gz https://github.com/Linkid/win-dependencies/releases/download/0.1/fretwork-win32-deppack-20190425.tar.gz
     - 7z x xxx.tar.gz -so | 7z x -aoa -si -ttar -o"fofix-win32-deppack-20130304-updated"
     - dir
     - dir fofix-win32-deppack-20130304-updated
