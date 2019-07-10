@@ -20,10 +20,8 @@
 # MA  02110-1301, USA.                                              #
 #####################################################################
 
-from setuptools import Extension
 import os
 import shlex
-import shutil
 import subprocess
 import sys
 
@@ -57,6 +55,11 @@ def find_command(cmd):
 
 def pc_exists(pkg):
     '''Check whether pkg-config thinks a library exists.'''
+    import subprocess
+    command = "pkg-config --print-errors --exists " + pkg
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+    process.wait()
+    print(process.returncode)
     if os.spawnl(os.P_WAIT, pkg_config, 'pkg-config', '--print-errors', '--exists', pkg) == 0:
         return True
     else:
@@ -148,47 +151,3 @@ if os.name == 'nt':
     # And we use the prebuilt soundtouch-c.
     soundtouch_info['libraries'].append('soundtouch-c')
     extra_soundtouch_src = []
-else:
-    # And build our own soundtouch-c.
-    extra_soundtouch_src = ['fretwork/mixstream/soundtouch-c.cpp']
-
-
-mixstreamSource = [
-    'fretwork/mixstream/_MixStream.pyx',
-    'fretwork/mixstream/MixStream.c',
-    'fretwork/mixstream/vorbis.c'
-]
-
-mixstreamSource.extend(extra_soundtouch_src)
-
-mixstreamExt = Extension('fretwork.mixstream._MixStream', mixstreamSource,
-    **combine_info(vorbisfile_info, soundtouch_info, glib_info, gthread_info, sdl_info, sdl_mixer_info))
-
-if os.name == 'nt':
-    # Work around for distutils needing the files to be inside the packages in order
-    # to copy them to the final package
-    mixstreamDlls = [
-        './win32/deps/bin/iconv.dll',
-        './win32/deps/bin/libglib-2.0-0.dll',
-        './win32/deps/bin/libgthread-2.0-0.dll',
-        './win32/deps/bin/libintl-8.dll',
-        './win32/deps/bin/libogg-0.dll',
-        './win32/deps/bin/libSoundTouch-0.dll',
-        './win32/deps/bin/libtheora-0.dll',
-        './win32/deps/bin/libvorbis-0.dll',
-        './win32/deps/bin/libvorbisfile-3.dll',
-        './win32/deps/bin/SDL.dll',
-        './win32/deps/bin/SDL_mixer.dll',
-        './win32/deps/bin/zlib1.dll'
-    ]
-
-    for f in mixstreamDlls:
-        print('copying ', f, ' -> ', './fretwork/mixstream/%s' % f.rsplit('/', 1)[1])
-        shutil.copy(f, './fretwork/mixstream/%s' % f.rsplit('/', 1)[1])
-else:
-    mixstreamDlls = []
-
-if os.name == 'nt':
-    for f in mixstreamDlls:
-        print('removing ', './fretwork/mixstream/%s' % f.rsplit('/', 1)[1])
-        os.remove('./fretwork/mixstream/%s' % f.rsplit('/', 1)[1])
