@@ -23,6 +23,7 @@ install:
     - dir
     - dir fofix-win32-deppack-20130304-updated
     - dir fofix-win32-deppack-20130304-updated\deps
+    - mkdir fretwork\win32
     - move fofix-win32-deppack-20130304-updated\deps fretwork\win32\
     - dir fretwork\win32\
     - xcopy build.cmd fretwork\
