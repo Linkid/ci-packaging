@@ -138,7 +138,7 @@ else:
     lib_blacklist = []
 
 
-vorbisfile_info = pc_info('vorbisfile')
+#vorbisfile_info = pc_info('vorbisfile')
 sdl_info = pc_info('sdl')
 sdl_mixer_info = pc_info('SDL_mixer')
 glib_info = pc_info('glib-2.0')
