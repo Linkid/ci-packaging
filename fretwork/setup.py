@@ -57,10 +57,8 @@ def pc_exists(pkg):
     '''Check whether pkg-config thinks a library exists.'''
     import subprocess
     command = pkg_config + " --print-errors --exists " + pkg
-    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    process.wait()
-    print(0, process.stdout)
-    print(1, process.stderr)
+    process = subprocess.check_output(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    print(process)
     if os.spawnl(os.P_WAIT, pkg_config, 'pkg-config', '--print-errors', '--exists', pkg) == 0:
         return True
     else:
