@@ -3,7 +3,7 @@ version: 0.4.2.{build}
 environment:
     global:
         - SDL_AUDIODRIVER: "disk"
-        - PKG_CONFIG_LIBDIR: "C:\projects\ci-packaging\fretwork\win32\deps\lib\pkgconfig"
+        - PKG_CONFIG_LIBDIR: "C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\lib\\pkgconfig"
 
 
     matrix:
