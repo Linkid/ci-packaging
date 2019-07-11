@@ -10,6 +10,7 @@ environment:
         - PYTHON: "C:\\Python27-x64"
 
 install:
+    - @echo on
     # Fetch submodules
     - git submodule update --init --recursive
 
