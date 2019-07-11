@@ -26,6 +26,9 @@ import subprocess
 import sys
 
 
+print("PKG_CONFIG_LIBDIR", os.environ['PKG_CONFIG_LIBDIR'])
+print("PKG_CONFIG_PATH", os.environ['PKG_CONFIG_PATH'])
+
 def find_command(cmd):
     '''Find a program on the PATH, or, on win32, in the dependency pack.'''
 
