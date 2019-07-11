@@ -58,7 +58,7 @@ def pc_exists(pkg):
     import subprocess
     command = pkg_config + " --print-errors --exists " + pkg
     process = subprocess.check_output(command, stderr=subprocess.STDOUT)
-    print(process)
+    print("xxx", process, "xxx")
     if os.spawnl(os.P_WAIT, pkg_config, 'pkg-config', '--print-errors', '--exists', pkg) == 0:
         return True
     else:
