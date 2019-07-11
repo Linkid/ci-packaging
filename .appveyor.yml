@@ -27,8 +27,11 @@ install:
     - move fofix-win32-deppack-20130304-updated\deps fretwork\win32\
     - dir fretwork\win32\
     - xcopy build.cmd fretwork\
+    - cmd: @echo on
+    - cmd: @echo %PKG_CONFIG_LIBDIR%
     - cmd: echo %PKG_CONFIG_LIBDIR%
     - cmd: echo %PKG_CONFIG_PATH%
+    - cmd: deps\bin\pkg-config.exe --list-all
 
     # We need wheel installed to build wheels
     - "%PYTHON%\\python.exe -m pip install wheel"
