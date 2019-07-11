@@ -56,7 +56,7 @@ def find_command(cmd):
 def pc_exists(pkg):
     '''Check whether pkg-config thinks a library exists.'''
     import subprocess
-    command = pkg_config + "--errors-to-stdout --print-errors --exists " + pkg
+    command = pkg_config + " --print-errors --exists " + pkg
     process = subprocess.call(command, stderr=subprocess.STDOUT, shell=True)
     print("xxx", process, "xxx")
     if os.spawnl(os.P_WAIT, pkg_config, 'pkg-config', '--print-errors', '--exists', pkg) == 0:
@@ -140,7 +140,7 @@ def combine_info(*args):
 
 # Find pkg-config so we can find the libraries we need.
 pkg_config = find_command('pkg-config')
-print("yyy", subprocess.call([pkg_config, "--list-all"]), "yyy")
+subprocess.call([pkg_config, "--list-all"])
 
 
 # Blacklist MinGW-specific dependency libraries on Windows.
