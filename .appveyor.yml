@@ -29,7 +29,8 @@ install:
     - xcopy build.cmd fretwork\
     - echo %PKG_CONFIG_LIBDIR%
     - echo %PKG_CONFIG_PATH%
-    - fretwork\win32\deps\bin\pkg-config.exe --list-all
+    - fretwork\win32\deps\bin\pkg-config.exe
+    - fretwork\win32\deps\bin\pkg-config.exe --help
 
     # We need wheel installed to build wheels
     - "%PYTHON%\\python.exe -m pip install wheel"
