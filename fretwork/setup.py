@@ -70,6 +70,7 @@ def pc_info(pkg, altnames=[]):
     return a dict that can be expanded into the argument list for
     L{distutils.core.Extension}.'''
 
+    exit = False
     sys.stdout.write('checking for library %s... ' % pkg)
     if not pc_exists(pkg):
         for name in altnames:
@@ -86,25 +87,30 @@ def pc_info(pkg, altnames=[]):
             else:
                 sys.stderr.write('(Check that you have the appropriate development package installed.)\n')
             #sys.exit(1)
+            exit = True
 
-    cflags = shlex.split(subprocess.check_output([pkg_config, '--cflags', pkg]).decode())
-    libs = shlex.split(subprocess.check_output([pkg_config, '--libs', pkg]).decode())
+    if not exit:
+        cflags = shlex.split(subprocess.check_output([pkg_config, '--cflags', pkg]).decode())
+        libs = shlex.split(subprocess.check_output([pkg_config, '--libs', pkg]).decode())
 
-    # Pick out anything interesting in the cflags and libs, and
-    # silently drop the rest.
-    def def_split(x):
-        pair = list(x.split('=', 1))
-        if len(pair) == 1:
-            pair.append(None)
-        return tuple(pair)
-    info = {
-        'define_macros': [def_split(x[2:]) for x in cflags if x[:2] == '-D'],
-        'include_dirs': [x[2:] for x in cflags if x[:2] == '-I'],
-        'libraries': [x[2:] for x in libs if x[:2] == '-l' and x[2:] not in lib_blacklist],
-        'library_dirs': [x[2:] for x in libs if x[:2] == '-L'],
-    }
+        # Pick out anything interesting in the cflags and libs, and
+        # silently drop the rest.
+        def def_split(x):
+            pair = list(x.split('=', 1))
+            if len(pair) == 1:
+                pair.append(None)
+            return tuple(pair)
+        info = {
+            'define_macros': [def_split(x[2:]) for x in cflags if x[:2] == '-D'],
+            'include_dirs': [x[2:] for x in cflags if x[:2] == '-I'],
+            'libraries': [x[2:] for x in libs if x[:2] == '-l' and x[2:] not in lib_blacklist],
+            'library_dirs': [x[2:] for x in libs if x[:2] == '-L'],
+        }
 
-    print('ok')
+        print('ok')
+    else:
+        info = dict()
+
     return info
 
 
