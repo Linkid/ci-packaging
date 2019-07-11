@@ -109,7 +109,12 @@ def pc_info(pkg, altnames=[]):
 
         print('ok')
     else:
-        info = dict()
+        info = {
+            'define_macros': [],
+            'include_dirs': [],
+            'libraries': [],
+            'library_dirs': [],
+        }
 
     return info
 
