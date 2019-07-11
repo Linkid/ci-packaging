@@ -140,6 +140,7 @@ def combine_info(*args):
 
 # Find pkg-config so we can find the libraries we need.
 pkg_config = find_command('pkg-config')
+print("yyy", subprocess.call([pkg_config, "--list-all"]), "yyy")
 
 
 # Blacklist MinGW-specific dependency libraries on Windows.
