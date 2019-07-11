@@ -85,7 +85,7 @@ def pc_info(pkg, altnames=[]):
                 sys.stderr.write('(Check that you have the latest version of the dependency pack installed.)\n')
             else:
                 sys.stderr.write('(Check that you have the appropriate development package installed.)\n')
-            sys.exit(1)
+            #sys.exit(1)
 
     cflags = shlex.split(subprocess.check_output([pkg_config, '--cflags', pkg]).decode())
     libs = shlex.split(subprocess.check_output([pkg_config, '--libs', pkg]).decode())
@@ -138,7 +138,7 @@ else:
     lib_blacklist = []
 
 
-#vorbisfile_info = pc_info('vorbisfile')
+vorbisfile_info = pc_info('vorbisfile')
 sdl_info = pc_info('sdl')
 sdl_mixer_info = pc_info('SDL_mixer')
 glib_info = pc_info('glib-2.0')
