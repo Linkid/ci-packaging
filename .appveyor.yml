@@ -131,10 +131,11 @@ install:
     # make a tarball with deps (see fofix/win32/makedist)
 
 build_script:
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py build_ext --inplace --force"
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py sdist"
+    - cd C:\projects\ci-packaging\fretwork
+    - "%PYTHON%\\python.exe setup.py build_ext --inplace --force"
+    - "%PYTHON%\\python.exe setup.py sdist"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/*"
-    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py bdist_wheel"
+    - "%PYTHON%\\python.exe setup.py bdist_wheel"
 
 #after_build::
 
