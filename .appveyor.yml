@@ -118,6 +118,9 @@ install:
     - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.o"
     - bash -lc "cp C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib C:/msys64/%MSYSTEM_%/lib"
 
+    # SDL
+    - bash -lc "cp C:/projects/ci-packaging/fretwork/win32/deps/include/SDL_config.h.default C:/projects/ci-packaging/fretwork/win32/deps/include/SDL_config.h
+
     # debug
 #    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
 #    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
