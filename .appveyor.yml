@@ -119,10 +119,10 @@ install:
     - bash -lc "cp C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib C:/msys64/%MSYSTEM_%/lib"
 
     # debug
-    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
-    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
-    #- "ECHO C:/msys64/%MSYSTEM_%/lib/"
-    - bash -lc "ls C:/msys64/%MSYSTEM_%/lib/"
+#    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
+#    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
+#    - "ECHO C:/msys64/%MSYSTEM_%/lib/"
+#    - bash -lc "ls C:/msys64/%MSYSTEM_%/lib/"
 
     # path
 #    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\bin;%PATH%"
