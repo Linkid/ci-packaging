@@ -1,49 +1,150 @@
-version: 0.4.2.{build}
+version: 0.4.0.{build}
 
 environment:
     global:
         SDL_AUDIODRIVER: "disk"
-
+        MSYSTEM: MINGW64
+        # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
+        # /E:ON and /V:ON options are not enabled in the batch script intepreter
+        # See: http://stackoverflow.com/a/13751649/163740
+        #WITH_COMPILER: "cmd /E:ON /V:ON /C .\\appveyor\\run_with_compiler.cmd"
 
     matrix:
-        - PYTHON: "C:\\Python27"
-        - PYTHON: "C:\\Python27-x64"
+        - MSYS2_ARCH: i686
+          MSYSTEM: MINGW32
+          MSYSTEM_: mingw32
+          PKG_PREFIX: "mingw-w64-i686"
+          PYTHON: "C:\\Python27"
+          PYTHON_VERSION: "python2"
 
-install:
-    # Fetch submodules
-    - git submodule update --init --recursive
+        - MSYS2_ARCH: x86_64
+          MSYSTEM: MINGW64
+          MSYSTEM_: mingw64
+          PKG_PREFIX: "mingw-w64-x86_64"
+          PYTHON: "C:\\Python27-x64"
+          PYTHON_VERSION: "python2"
 
-    # get windows deps
-    #- curl -fsSL -o xxx.zip http://fofix.net/downloads/fofix-win32-deppack-20130304-updated.zip
-    #- 7z x xxx.zip
-    # https://superuser.com/a/546694/562968
-    #- curl -fsSL -o xxx.tar.gz https://github.com/Linkid/win-dependencies/releases/download/0.1/fretwork-win32-deppack-20190425.tar.gz
-    - curl -fsSL -o xxx.tar.gz https://github.com/Linkid/win-dependencies/releases/download/0.2/fretwork-win32-deppack-20190531.tar.gz
-    - 7z x xxx.tar.gz -so | 7z x -aoa -si -ttar -o"fofix-win32-deppack-20130304-updated"
-    - dir
-    - dir fofix-win32-deppack-20130304-updated
-    - dir fofix-win32-deppack-20130304-updated\deps
-    - mkdir fretwork\win32
-    - move fofix-win32-deppack-20130304-updated\deps fretwork\win32\
-    - dir fretwork\win32\
-    - xcopy build.cmd fretwork\
-    - echo %PKG_CONFIG_LIBDIR%
-    - echo %PKG_CONFIG_PATH%
+        - MSYS2_ARCH: i686
+          MSYSTEM: MINGW32
+          MSYSTEM_: mingw32
+          PKG_PREFIX: "mingw-w64-i686"
+          PYTHON: "C:\\Python36"
+          PYTHON_VERSION: "python3"
 
-    # We need wheel installed to build wheels
-    - "%PYTHON%\\python.exe -m pip install wheel"
+        - MSYS2_ARCH: x86_64
+          MSYSTEM: MINGW64
+          MSYSTEM_: mingw64
+          PKG_PREFIX: "mingw-w64-x86_64"
+          PYTHON: "C:\\Python36-x64"
+          PYTHON_VERSION: "python3"
 
-    # Install python deps
-    - "%PYTHON%\\python.exe -m pip install cython"
+#        - PYTHON: "C:\\Python27"
+#          PYTHON_ARCH: 32
+#          MSVC_VERSION: "Visual Studio 10"
+#
+#        - PYTHON: "C:\\Python36"
+#          PYTHON_ARCH: 32
+#          MSVC_VERSION: "Visual Studio 14"
+#
+#        - PYTHON: "C:\\Python27-x64"
+#          PYTHON_ARCH: 64
+#          MSVC_VERSION: "Visual Studio 10 Win64"
+#
+#        - PYTHON: "C:\\Python36-x64"
+#          PYTHON_ARCH: 64
+#          MSVC_VERSION: "Visual Studio 14 Win64"
+
+#matrix:
+#    fast_finish: true
 
 build: off
 
-build_script:
-    - cd fretwork
-    - "%PYTHON%\\python.exe setup.py build_ext --inplace --force"
-    - "build.cmd %PYTHON%\\python.exe setup.py sdist"
-    - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
+init:
+    - "ECHO %PYTHON% %PYTHON_ARCH% %MSVC_VERSION%"
+    - "SET PATH=C:\\msys64\\%MSYSTEM%\\bin;C:\\msys64\\usr\\bin;C:\\msys64\\bin;%PATH%"
 
+install:
+    # Put Python in PATH
+    #- "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+
+    # download and unzip sources
+    # https://github.com/vladimirgamalyan/sdl2_msvc_builds/blob/master/appveyor.yml
+    #- appveyor DownloadFile https://www.libsdl.org/release/SDL-1.2.15-win32.zip
+    #- 7z x SDL-1.2.15-win32.zip > nul
+
+    # system dependencies
+    - "echo %PKG_PREFIX%"
+    - pacman -Syu --noconfirm
+    - pacman --noconfirm --needed -Sy bash pacman pacman-mirrors msys2-runtime msys2-runtime-devel
+    - bash -lc "pacman -S --noconfirm --needed --noprogressbar
+        autoconf
+        automake
+        base-devel
+        %PKG_PREFIX%-toolchain
+        %PKG_PREFIX%-pkg-config
+        %PKG_PREFIX%-portmidi
+        %PKG_PREFIX%-libvorbis
+        %PKG_PREFIX%-libtheora
+        %PKG_PREFIX%-SDL
+        %PKG_PREFIX%-SDL_image
+        %PKG_PREFIX%-SDL_mixer
+        %PKG_PREFIX%-SDL_ttf
+        %PKG_PREFIX%-soundtouch
+        %PKG_PREFIX%-libiconv"
+#    - bash -lc "ls C:/msys64/mingw32/bin/"
+#    - bash -lc "ls C:/msys64/mingw64/bin/"
+#    - bash -lc "ls C:/msys64/usr/bin/"
+
+    # python dependencies
+    - bash -lc "%PYTHON%/python.exe --version"
+    - bash -lc "%PYTHON%/python.exe -m pip install -U pip" # Upgrade pip
+    - bash -lc "%PYTHON%/python.exe -m pip install wheel"
+    - bash -lc "%PYTHON%/python.exe -m pip install cython"
+
+    # git submodule
+    - "git submodule update --init --recursive"
+
+    # link
+    - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libiconv-2.dll C:/msys64/%MSYSTEM_%/bin/iconv.dll"
+    - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libSoundTouch-1.dll C:/msys64/%MSYSTEM_%/bin/libSoundTouch-0.dll"
+    - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libSDL_mixer-1-2-0.dll C:/msys64/%MSYSTEM_%/bin/SDL_mixer.dll"
+    - bash -lc "ln -s C:/msys64/%MSYSTEM_% C:/projects/ci-packaging/fretwork/win32/deps"
+
+      ## soundtouch-c
+    - bash -lc "%MSYS2_ARCH%-w64-mingw32-g++ -g -O2 -W -Wall `%MSYS2_ARCH%-w64-mingw32-pkg-config --cflags glib-2.0 soundtouch` -fexceptions -fno-rtti -c -o soundtouch-c.o C:/projects/ci-packaging/fretwork/fretwork/mixstream/soundtouch-c.cpp"
+    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib"
+    - bash -lc "%MSYS2_ARCH%-w64-mingw32-gcc-ar cru C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib soundtouch-c.o"
+    - bash -lc "%MSYS2_ARCH%-w64-mingw32-gcc-ranlib C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib"
+    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.o"
+    - bash -lc "cp C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib C:/msys64/%MSYSTEM_%/lib"
+
+    # debug
+    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
+    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
+    #- "ECHO C:/msys64/%MSYSTEM_%/lib/"
+    - bash -lc "ls C:/msys64/%MSYSTEM_%/lib/"
+
+    # path
+#    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\bin;%PATH%"
+#    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\lib;%PATH%"
+
+    # make a tarball with deps (see fofix/win32/makedist)
+
+build_script:
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py build_ext --inplace --force"
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py sdist"
+    - bash -lc "ls C:/projects/ci-packaging/fretwork/*"
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py bdist_wheel"
+
+#after_build::
+
+#test_script:
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install dist/*.whl"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install dist/fretwork-0.3.0.tar.gz"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install pytest"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && rm -rf fretwork"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && pytest tests"
+#    - bash -lc "cd C:/projects/ci-packaging/fretwork && python -c 'from fretwork.mixstream import *'"
 
 artifacts:
     - path: fretwork\dist\*
