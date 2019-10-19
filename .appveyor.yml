@@ -96,10 +96,10 @@ install:
 #    - bash -lc "ls C:/msys64/usr/bin/"
 
     # python dependencies
-    - bash -lc "%PYTHON%/python.exe --version"
-    - bash -lc "%PYTHON%/python.exe -m pip install -U pip" # Upgrade pip
-    - bash -lc "%PYTHON%/python.exe -m pip install wheel"
-    - bash -lc "%PYTHON%/python.exe -m pip install cython"
+    - %PYTHON%\\python.exe --version"
+    - %PYTHON%\\python.exe -m pip install -U pip" # Upgrade pip
+    - %PYTHON%\\python.exe -m pip install wheel"
+    - %PYTHON%\\python.exe -m pip install cython"
 
     # git submodule
     - "git submodule update --init --recursive"
@@ -110,7 +110,7 @@ install:
     - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libSDL_mixer-1-2-0.dll C:/msys64/%MSYSTEM_%/bin/SDL_mixer.dll"
     - bash -lc "ln -s C:/msys64/%MSYSTEM_% C:/projects/ci-packaging/fretwork/win32/deps"
 
-      ## soundtouch-c
+    ## soundtouch-c
     - bash -lc "%MSYS2_ARCH%-w64-mingw32-g++ -g -O2 -W -Wall `%MSYS2_ARCH%-w64-mingw32-pkg-config --cflags glib-2.0 soundtouch` -fexceptions -fno-rtti -c -o soundtouch-c.o C:/projects/ci-packaging/fretwork/fretwork/mixstream/soundtouch-c.cpp"
     - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib"
     - bash -lc "%MSYS2_ARCH%-w64-mingw32-gcc-ar cru C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib soundtouch-c.o"
