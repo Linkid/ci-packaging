@@ -120,6 +120,7 @@ install:
 
     ## SDL
     - bash -lc "wget https://libsdl.org/release/SDL-1.2.15/include/SDL_config.h.default -O C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config.h"
+    - bash -lc "wget https://libsdl.org/release/SDL-1.2.15/include/SDL_config_win32.h -O C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config_win32.h"
 
     # debug
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/include/SDL"
