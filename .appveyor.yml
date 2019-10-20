@@ -16,6 +16,7 @@ environment:
           PKG_PREFIX: "mingw-w64-i686"
           PYTHON: "C:\\Python27"
           PYTHON_VERSION: "python2"
+          MSVC_VERSION: "Visual Studio 10"
 
         - MSYS2_ARCH: x86_64
           MSYSTEM: MINGW64
@@ -23,6 +24,7 @@ environment:
           PKG_PREFIX: "mingw-w64-x86_64"
           PYTHON: "C:\\Python27-x64"
           PYTHON_VERSION: "python2"
+          MSVC_VERSION: "Visual Studio 14"
 
         - MSYS2_ARCH: i686
           MSYSTEM: MINGW32
