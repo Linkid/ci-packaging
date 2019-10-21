@@ -138,11 +138,15 @@ install:
     - 7z a C:\projects\ci-packaging\fretwork\build\deps.zip C:\projects\ci-packaging\fretwork\win32\deps
 
 build_script:
-    - cd C:\projects\ci-packaging\fretwork
-    - "%PYTHON%\\python.exe setup.py build_ext --inplace --force"
-    - "%PYTHON%\\python.exe setup.py sdist"
+#    - cd C:\projects\ci-packaging\fretwork
+#    - "%PYTHON%\\python.exe setup.py build_ext --inplace --force"
+#    - "%PYTHON%\\python.exe setup.py sdist"
+#    - bash -lc "ls C:/projects/ci-packaging/fretwork/*"
+#    - "%PYTHON%\\python.exe setup.py bdist_wheel"
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py build_ext --inplace --force"
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py sdist"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/*"
-    - "%PYTHON%\\python.exe setup.py bdist_wheel"
+    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py bdist_wheel"
 
 #after_build::
 
