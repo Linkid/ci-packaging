@@ -135,7 +135,7 @@ install:
 
     # make a tarball with deps (see fofix/win32/makedist)
     - bash -lc "mkdir -p C:/projects/ci-packaging/fretwork/build"
-    - bash -lc "zip -9r C:/projects/ci-packaging/fretwork/build/deps.zip C:/projects/ci-packaging/fretwork/win32/deps"
+    - 7z a C:\projects\ci-packaging\fretwork\build\deps.zip C:\projects\ci-packaging\fretwork\win32\deps
 
 build_script:
     - cd C:\projects\ci-packaging\fretwork
