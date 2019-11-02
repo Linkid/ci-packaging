@@ -126,7 +126,7 @@ install:
     # dll -> exp -> lib
     - bash -lc "pacman -S --noconfirm --needed --noprogressbar
         %PKG_PREFIX%-llvm"
-    - bash -lc "make_implib.sh i386"
+    - bash -lc "C:/projects/ci-packaging/make_implib.sh i386"
 
     # debug
 #    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/include/SDL"
