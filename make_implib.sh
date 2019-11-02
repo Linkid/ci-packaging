@@ -46,7 +46,8 @@ make_implib() {
 }
 
 arch=$1
-for implib in `lib/*.a`
+implibs=`ls lib/*.a`
+for implib in $implibs
 do
     # get dll names from the dll.a
     dll_a_name="${$implib##*/}"
