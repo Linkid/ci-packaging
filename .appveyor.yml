@@ -118,9 +118,10 @@ install:
     - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.o"
     - bash -lc "cp C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib C:/msys64/%MSYSTEM_%/lib"
 
-    ## SDL
-    - bash -lc "wget https://libsdl.org/release/SDL-1.2.15/include/SDL_config.h.default -O C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config.h"
+    ## SDL: use the win32 config header
+    #- bash -lc "wget https://libsdl.org/release/SDL-1.2.15/include/SDL_config.h.default -O C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config.h"
     - bash -lc "wget https://libsdl.org/release/SDL-1.2.15/include/SDL_config_win32.h -O C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config_win32.h"
+    - bash -lc "mv C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config_win32.h C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config.h"
 
     # debug
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/include/SDL"
