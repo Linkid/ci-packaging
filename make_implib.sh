@@ -51,7 +51,7 @@ implibs=`ls ${working_dir}/lib/*.a`
 for implib in $implibs
 do
     # get dll names from the dll.a
-    dll_a_name="${$implib##*/}"
+    dll_a_name="${implib##*/}"
     dllnames=`dlltool -I ${implib}`
 
     for dll in $dllnames
