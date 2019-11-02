@@ -124,8 +124,8 @@ install:
     - bash -lc "mv C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config_win32.h C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config.h"
 
     # debug
-    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/include/SDL"
-    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
+#    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/include/SDL"
+#    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
 #    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
 #    - "ECHO C:/msys64/%MSYSTEM_%/lib/"
 #    - bash -lc "ls C:/msys64/%MSYSTEM_%/lib/"
