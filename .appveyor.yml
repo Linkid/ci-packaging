@@ -123,10 +123,15 @@ install:
     - bash -lc "wget https://libsdl.org/release/SDL-1.2.15/include/SDL_config_win32.h -O C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config_win32.h"
     - bash -lc "mv C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config_win32.h C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config.h"
 
+    # dll -> exp -> lib
+    - bash -lc "pacman -S --noconfirm --needed --noprogressbar
+        %PKG_PREFIX%-llvm"
+    - bash -lc "make_implib.sh i386"
+
     # debug
 #    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/include/SDL"
 #    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/"
-#    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
+    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
 #    - "ECHO C:/msys64/%MSYSTEM_%/lib/"
 #    - bash -lc "ls C:/msys64/%MSYSTEM_%/lib/"
 
