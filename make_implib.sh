@@ -73,7 +73,7 @@ main() {
     implibs=`ls ${working_dir}/lib/*.dll.a`
     for implib in $implibs
     do
-        echo "*** ${implib}"
+        #echo "*** ${implib}"
 
         # get dll names from the dll.a
         dll_a_name="${implib##*/}"
