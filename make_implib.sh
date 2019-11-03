@@ -1,10 +1,9 @@
 #!/bin/bash
 
-# see https://stackoverflow.com/a/53838952/5222966
-# Given libxyz-1.dll, create import library libxyz-1.lib
-# make_implib i386 usr/i686-w64-mingw32/sys-root/mingw/bin/libgnutls-30.dll
 #
 # make_implib
+# Given libxyz-1.dll, create import library libxyz-1.lib
+# see https://stackoverflow.com/a/53838952/5222966
 #
 # - machine: i386, i386:x86-64, arm, arm64
 # - working_dir
@@ -25,7 +24,7 @@ make_implib() {
     name="${name_ext%.dll.a}"                 # XXX
     deffile="${working_dir}/lib/${name}.def"  # /dir/lib/XXX.def
     libfile="${working_dir}/lib/${name}.lib"  # /dir/lib/XXX.def
-    echo $dll
+    echo $dllfile
     echo $dllname
     echo $deffile
     echo $libfile
@@ -59,6 +58,36 @@ make_implib() {
 }
 
 
+#
+# Main
+#
+# - arch: i386, i386:x86-64, arm, arm64
+# - working_dir
+#
+#
+main() {
+    local arch=$1
+    local working_dir=$2
+    local implibs dll_a_name dllnames
+
+    implibs=`ls ${working_dir}/lib/*.dll.a`
+    for implib in $implibs
+    do
+        echo "*** ${implib}"
+
+        # get dll names from the dll.a
+        dll_a_name="${implib##*/}"
+        dllnames=`dlltool -I ${implib}`
+
+        # make the lib file
+        for dll in $dllnames
+        do
+            # make implib
+            make_implib $arch $working_dir $dll $dll_a_name
+        done
+    done
+}
+
 
 # bin/*.dll
 # lib/*.a
@@ -78,20 +107,4 @@ make_implib() {
 
 arch=$1
 working_dir=$2
-implibs=`ls ${working_dir}/lib/libvorbisfile.dll.a`
-#implibs=`ls ${working_dir}/lib/*.dll.a`
-for implib in $implibs
-do
-    echo "*** ${implib}"
-
-    # get dll names from the dll.a
-    dll_a_name="${implib##*/}"
-    dllnames=`dlltool -I ${implib}`
-
-    # make the lib file
-    for dll in $dllnames
-    do
-        # make implib
-        make_implib $arch $working_dir $dll $dll_a_name
-    done
-done
+main ${arch} ${working_dir}
