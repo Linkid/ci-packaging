@@ -16,6 +16,7 @@ environment:
           PKG_PREFIX: "mingw-w64-i686"
           PYTHON: "C:\\Python27"
           PYTHON_VERSION: "python2"
+          ARCH: i386
 
         - MSYS2_ARCH: x86_64
           MSYSTEM: MINGW64
@@ -23,6 +24,7 @@ environment:
           PKG_PREFIX: "mingw-w64-x86_64"
           PYTHON: "C:\\Python27-x64"
           PYTHON_VERSION: "python2"
+          ARCH: i386:x86-64
 
         - MSYS2_ARCH: i686
           MSYSTEM: MINGW32
@@ -30,6 +32,7 @@ environment:
           PKG_PREFIX: "mingw-w64-i686"
           PYTHON: "C:\\Python36"
           PYTHON_VERSION: "python3"
+          ARCH: i386
 
         - MSYS2_ARCH: x86_64
           MSYSTEM: MINGW64
@@ -37,6 +40,7 @@ environment:
           PKG_PREFIX: "mingw-w64-x86_64"
           PYTHON: "C:\\Python36-x64"
           PYTHON_VERSION: "python3"
+          ARCH: i386:x86-64
 
 #        - PYTHON: "C:\\Python27"
 #          PYTHON_ARCH: 32
@@ -127,7 +131,7 @@ install:
     # dll -> exp -> lib
     - bash -lc "pacman -S --noconfirm --needed --noprogressbar
         %PKG_PREFIX%-llvm"
-    - bash -lc "C:/projects/ci-packaging/make_implib.sh i386 C:/projects/ci-packaging/fretwork/win32/deps"
+    - bash -lc "C:/projects/ci-packaging/make_implib.sh %ARCH% C:/projects/ci-packaging/fretwork/win32/deps"
 
     # strip binaries and libraries
     - bash -lc "strip --strip-all C:/projects/ci-packaging/fretwork/win32/deps/bin/*.exe"
