@@ -48,7 +48,7 @@ make_implib() {
 
 arch=$1
 working_dir=$2
-implibs=`ls ${working_dir}/lib/libvobisfile.dll.a`
+implibs=`ls ${working_dir}/lib/libvorbisfile.dll.a ${working_dir}/lib/libvorbisfile.a`
 #implibs=`ls ${working_dir}/lib/*.a`
 for implib in $implibs
 do
