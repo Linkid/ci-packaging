@@ -131,10 +131,8 @@ install:
 
     # strip binaries and libraries
     - bash -lc "strip --strip-all C:/projects/ci-packaging/fretwork/win32/deps/bin/*.exe"
-    #- bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/*.dll"
     #- bash -lc "strip --strip-all C:/projects/ci-packaging/fretwork/win32/deps/bin/*.dll"
-    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/*.lib"
-    - bash -lc "strip --strip-debug C:/projects/ci-packaging/fretwork/win32/deps/lib/*.lib"
+    #- bash -lc "strip --strip-debug C:/projects/ci-packaging/fretwork/win32/deps/lib/*.lib"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/*.a"
     - bash -lc "strip --strip-debug C:/projects/ci-packaging/fretwork/win32/deps/lib/*.a"
 
