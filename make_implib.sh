@@ -6,6 +6,7 @@
 make_implib() {
     local machine=$1 dll="$2" dllname deffile libfile
 
+    working_dir=$(dirname "${dll}")
     dllname="${dll##*/}"
     libname="${dllname#lib}"
     libpath="lib/${libname}"
@@ -47,16 +48,18 @@ make_implib() {
 
 arch=$1
 working_dir=$2
-implibs=`ls ${working_dir}/lib/*.a`
+implibs=`ls ${working_dir}/lib/libvobisfile-3.dll.a`
+#implibs=`ls ${working_dir}/lib/*.a`
 for implib in $implibs
 do
     # get dll names from the dll.a
+    echo "*** $implib"
     dll_a_name="${implib##*/}"
     dllnames=`dlltool -I ${implib}`
 
     for dll in $dllnames
     do
         # make implib
-        make_implib $arch $dll
+        make_implib $arch "$working_dir/$dll"
     done
 done
