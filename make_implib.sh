@@ -3,22 +3,35 @@
 # see https://stackoverflow.com/a/53838952/5222966
 # Given libxyz-1.dll, create import library libxyz-1.lib
 # make_implib i386 usr/i686-w64-mingw32/sys-root/mingw/bin/libgnutls-30.dll
+#
+# make_implib
+#
+# - machine: i386, i386:x86-64, arm, arm64
+# - working_dir
+# - dll: *.dll
+# - dlla: *.dll.a
+#
 make_implib() {
-    local machine=$1 dll="$2" dlla=$3 dllname dllaname name deffile libfile
+    local machine=$1
+    local working_dir=$2
+    local dll=$3
+    local dlla=$4
+    local dllname dllaname name deffile libfile
 
-    working_dir=$(dirname "${dll}")
-    dllname="${dll##*/}"
-    dllaname="${dlla##*/}"
-    name="${dllaname#lib}"
-    deffile="${working_dir}/lib/${name}.def"
-    libfile="${working_dir}/lib/${name}.lib"
+    dllname="${dll##*/}"                      # libYYY.dll
+    dllfile="${working_dir}/bin/${dllname}"   # /dir/bin/libYYY.dll
+    dllaname="${dlla##*/}"                    # libXXX.dll.a
+    name_ext="${dllaname#lib}"                # XXX.dll.a
+    name="${name_ext%.dll.a}"                 # XXX
+    deffile="${working_dir}/lib/${name}.def"  # /dir/lib/XXX.def
+    libfile="${working_dir}/lib/${name}.lib"  # /dir/lib/XXX.def
     echo $dll
     echo $dllname
     echo $deffile
     echo $libfile
 
     # Extract exports from the .edata section, writing results to the .def file.
-    LC_ALL=C objdump -p "$dll" | awk -vdllname="$dllname" '
+    LC_ALL=C objdump -p "$dllfile" | awk -vdllname="$dllname" '
     /^\[Ordinal\/Name Pointer\] Table$/ {
         print "LIBRARY " dllname
         print "EXPORTS"
@@ -79,6 +92,6 @@ do
     for dll in $dllnames
     do
         # make implib
-        make_implib $arch "$working_dir/bin/$dll" $dll_a_name
+        make_implib $arch $working_dir $dll $dll_a_name
     done
 done
