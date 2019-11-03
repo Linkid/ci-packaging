@@ -45,6 +45,24 @@ make_implib() {
     rm -f "$deffile"
 }
 
+
+
+# bin/*.dll
+# lib/*.a
+# lib/*.dll.a
+# lib/*.lib
+# lib/*.exp
+# lib/*.def
+# lib/pkgconfig/*.pc
+
+# vorbisfile:
+# bin/libvorbisfile-3.dll   dll / output of dlltool
+# lib/vorbisfile.pc         pc
+# lib/libvorbisfile.dll.a   implib / dlla
+# lib/vorbisfile.def        def
+# lib/vorbisfile.exp        exp
+# lib/vorbisfile.lib        lib
+
 arch=$1
 working_dir=$2
 implibs=`ls ${working_dir}/lib/libvorbisfile.dll.a`
