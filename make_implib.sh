@@ -4,17 +4,16 @@
 # Given libxyz-1.dll, create import library libxyz-1.lib
 # make_implib i386 usr/i686-w64-mingw32/sys-root/mingw/bin/libgnutls-30.dll
 make_implib() {
-    local machine=$1 dll="$2" dllname deffile libfile
+    local machine=$1 dll="$2" dlla=$3 dllname dllaname name deffile libfile
 
     working_dir=$(dirname "${dll}")
     dllname="${dll##*/}"
-    libname="${dllname#lib}"
-    libpath="lib/${libname}"
-    deffile="${libpath%.dll}.def"
-    libfile="${libpath%.dll}.lib"
+    dllaname="${dlla##*/}"
+    name="${dllaname#lib}"
+    deffile="${working_dir}/lib/${name}.def"
+    libfile="${working_dir}/lib/${name}.lib"
+    echo $dll
     echo $dllname
-    echo $libname
-    echo $libpath
     echo $deffile
     echo $libfile
 
@@ -48,18 +47,20 @@ make_implib() {
 
 arch=$1
 working_dir=$2
-implibs=`ls ${working_dir}/lib/libvorbisfile.dll.a ${working_dir}/lib/libvorbisfile.a`
-#implibs=`ls ${working_dir}/lib/*.a`
+implibs=`ls ${working_dir}/lib/libvorbisfile.dll.a`
+#implibs=`ls ${working_dir}/lib/*.dll.a`
 for implib in $implibs
 do
+    echo "*** ${implib}"
+
     # get dll names from the dll.a
-    echo "*** $implib"
     dll_a_name="${implib##*/}"
     dllnames=`dlltool -I ${implib}`
 
+    # make the lib file
     for dll in $dllnames
     do
         # make implib
-        make_implib $arch "$working_dir/$dll"
+        make_implib $arch "$working_dir/bin/$dll" $dll_a_name
     done
 done
