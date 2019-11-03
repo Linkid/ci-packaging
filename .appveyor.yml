@@ -130,7 +130,7 @@ install:
     - bash -lc "C:/projects/ci-packaging/make_implib.sh i386 C:/projects/ci-packaging/fretwork/win32/deps"
 
     # strip binaries and libraries
-    - bash -lc "%MSYS2_ARCH%-w64-mingw32-strip --strip-all C:/projects/ci-packaging/deps/bin/*.exe C:/projects/ci-packaging/deps/bin/*.dll"
+    - bash -lc "strip --strip-all C:/projects/ci-packaging/deps/bin/*.exe C:/projects/ci-packaging/deps/bin/*.dll"
     - bash -lc "%MSYS2_ARCH%-w64-mingw32-strip --strip-debug C:/projects/ci-packaging/deps/lib/*.lib C:/projects/ci-packaging/deps/lib/*.a"
 
     # debug
