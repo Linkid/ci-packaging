@@ -18,29 +18,29 @@ environment:
           PYTHON_VERSION: "python2"
           ARCH: i386
 
-        - MSYS2_ARCH: x86_64
-          MSYSTEM: MINGW64
-          MSYSTEM_: mingw64
-          PKG_PREFIX: "mingw-w64-x86_64"
-          PYTHON: "C:\\Python27-x64"
-          PYTHON_VERSION: "python2"
-          ARCH: i386:x86-64
-
-        - MSYS2_ARCH: i686
-          MSYSTEM: MINGW32
-          MSYSTEM_: mingw32
-          PKG_PREFIX: "mingw-w64-i686"
-          PYTHON: "C:\\Python36"
-          PYTHON_VERSION: "python3"
-          ARCH: i386
-
-        - MSYS2_ARCH: x86_64
-          MSYSTEM: MINGW64
-          MSYSTEM_: mingw64
-          PKG_PREFIX: "mingw-w64-x86_64"
-          PYTHON: "C:\\Python36-x64"
-          PYTHON_VERSION: "python3"
-          ARCH: i386:x86-64
+#        - MSYS2_ARCH: x86_64
+#          MSYSTEM: MINGW64
+#          MSYSTEM_: mingw64
+#          PKG_PREFIX: "mingw-w64-x86_64"
+#          PYTHON: "C:\\Python27-x64"
+#          PYTHON_VERSION: "python2"
+#          ARCH: i386:x86-64
+#
+#        - MSYS2_ARCH: i686
+#          MSYSTEM: MINGW32
+#          MSYSTEM_: mingw32
+#          PKG_PREFIX: "mingw-w64-i686"
+#          PYTHON: "C:\\Python36"
+#          PYTHON_VERSION: "python3"
+#          ARCH: i386
+#
+#        - MSYS2_ARCH: x86_64
+#          MSYSTEM: MINGW64
+#          MSYSTEM_: mingw64
+#          PKG_PREFIX: "mingw-w64-x86_64"
+#          PYTHON: "C:\\Python36-x64"
+#          PYTHON_VERSION: "python3"
+#          ARCH: i386:x86-64
 
 #        - PYTHON: "C:\\Python27"
 #          PYTHON_ARCH: 32
@@ -85,19 +85,41 @@ install:
         automake
         base-devel
         %PKG_PREFIX%-toolchain
-        %PKG_PREFIX%-pkg-config
-        %PKG_PREFIX%-portmidi
-        %PKG_PREFIX%-libvorbis
-        %PKG_PREFIX%-libtheora
-        %PKG_PREFIX%-SDL
-        %PKG_PREFIX%-SDL_image
-        %PKG_PREFIX%-SDL_mixer
-        %PKG_PREFIX%-SDL_ttf
-        %PKG_PREFIX%-soundtouch
-        %PKG_PREFIX%-libiconv"
-    #- bash -lc "ls C:/msys64/mingw32/bin/"
-    #- bash -lc "ls C:/msys64/mingw64/bin/"
-    #- bash -lc "ls C:/msys64/usr/bin/"
+        %PKG_PREFIX%-llvm"
+
+    # remove libtool libs, .def files, unecessary scripts / files
+    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/doc"
+    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/share"
+    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/*.la"
+    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/*.def"
+    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/bin/pkg-config"
+
+    # create the deppack
+    - bash -lc "export PREFIX='C:/projects/ci-packaging/fretwork/win32/deps'"
+    - bash -lc "export ARCH=%MSYS2_ARCH%"
+    - bash -lc "export MINGW=w64"
+    - bash -lc "export WIN=win32"
+    - bash -lc "export PLATFORM=${ARCH}-${MINGW}-mingw32"
+    - bash -lc "source C:/projects/ci-packaging/fretwork-deps.sh"
+    - bash -lc "build_workspace"
+    - bash -lc "build_iconv"
+    - bash -lc "build_zlib"
+    - bash -lc "build_glib"
+    - bash -lc "build_pkgconfig"
+    - bash -lc "build_libogg"
+    - bash -lc "build_libvorbis"
+    - bash -lc "build_libtheora"
+    - bash -lc "build_soundtouch"
+    - bash -lc "build_sdl_mixer"
+
+    # dll -> exp -> lib
+    - bash -lc "C:/projects/ci-packaging/make_implib.sh %ARCH% C:/projects/ci-packaging/fretwork/win32/deps"
+
+    # strip binaries and libraries
+    - bash -lc "strip --strip-all C:/projects/ci-packaging/fretwork/win32/deps/bin/*.exe"
+    - bash -lc "strip --strip-all C:/projects/ci-packaging/fretwork/win32/deps/bin/*.dll"
+    - bash -lc "strip --strip-debug C:/projects/ci-packaging/fretwork/win32/deps/lib/*.lib"
+    - bash -lc "strip --strip-debug C:/projects/ci-packaging/fretwork/win32/deps/lib/*.a"
 
     # python dependencies
     - "%PYTHON%\\python.exe --version"
@@ -108,44 +130,11 @@ install:
     # git submodule
     - "git submodule update --init --recursive"
 
-    # link
-    - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libiconv-2.dll C:/msys64/%MSYSTEM_%/bin/iconv.dll"
-    - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libSoundTouch-1.dll C:/msys64/%MSYSTEM_%/bin/libSoundTouch-0.dll"
-    - bash -lc "ln -s C:/msys64/%MSYSTEM_%/bin/libSDL_mixer-1-2-0.dll C:/msys64/%MSYSTEM_%/bin/SDL_mixer.dll"
-    - bash -lc "ln -s C:/msys64/%MSYSTEM_% C:/projects/ci-packaging/fretwork/win32/deps"
-
-    ## soundtouch-c
-    - bash -lc "%MSYS2_ARCH%-w64-mingw32-g++ -g -O2 -W -Wall `%MSYS2_ARCH%-w64-mingw32-pkg-config --cflags glib-2.0 soundtouch` -fexceptions -fno-rtti -c -o soundtouch-c.o C:/projects/ci-packaging/fretwork/fretwork/mixstream/soundtouch-c.cpp"
-    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib"
-    - bash -lc "%MSYS2_ARCH%-w64-mingw32-gcc-ar cru C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib soundtouch-c.o"
-    - bash -lc "%MSYS2_ARCH%-w64-mingw32-gcc-ranlib C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib"
-    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.o"
-    - bash -lc "cp C:/projects/ci-packaging/fretwork/win32/deps/lib/soundtouch-c.lib C:/msys64/%MSYSTEM_%/lib"
-
-    ## SDL: use the win32 config header
-    #- bash -lc "wget https://libsdl.org/release/SDL-1.2.15/include/SDL_config.h.default -O C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config.h"
-    - bash -lc "wget https://libsdl.org/release/SDL-1.2.15/include/SDL_config_win32.h -O C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config_win32.h"
-    - bash -lc "mv C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config_win32.h C:/projects/ci-packaging/fretwork/win32/deps/include/SDL/SDL_config.h"
-    - bash -lc "mv C:/projects/ci-packaging/fretwork/win32/deps/lib/libSDLmain.a C:/projects/ci-packaging/fretwork/win32/deps/lib/SDLmain.lib"
-
-    # dll -> exp -> lib
-    - bash -lc "pacman -S --noconfirm --needed --noprogressbar
-        %PKG_PREFIX%-llvm"
-    - bash -lc "C:/projects/ci-packaging/make_implib.sh %ARCH% C:/projects/ci-packaging/fretwork/win32/deps"
-
-    # strip binaries and libraries
-    - bash -lc "strip --strip-all C:/projects/ci-packaging/fretwork/win32/deps/bin/*.exe"
-    #- bash -lc "strip --strip-all C:/projects/ci-packaging/fretwork/win32/deps/bin/*.dll"
-    #- bash -lc "strip --strip-debug C:/projects/ci-packaging/fretwork/win32/deps/lib/*.lib"
-    - bash -lc "strip --strip-debug C:/projects/ci-packaging/fretwork/win32/deps/lib/*.a"
-
     # debug
     #- bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/include/SDL"
     #- bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/*.lib"
     #- bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/*.a"
     #- bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
-    #- "ECHO C:/msys64/%MSYSTEM_%/lib/"
-    #- bash -lc "ls C:/msys64/%MSYSTEM_%/lib/"
 
     # path
     #- "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\bin;%PATH%"
