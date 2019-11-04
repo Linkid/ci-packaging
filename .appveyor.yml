@@ -121,6 +121,8 @@ install:
     - bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_sdl_mixer"
 
     # dll -> exp -> lib
+    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/"
+    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/*.a"
     - bash -lc "C:/projects/ci-packaging/make_implib.sh %ARCH% C:/projects/ci-packaging/fretwork/win32/deps"
 
     # strip binaries and libraries
