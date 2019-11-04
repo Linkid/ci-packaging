@@ -426,3 +426,17 @@ main()
     package_dist
 }
 #main
+
+arg=$1
+case arg in
+    "build_workspace") build_workspace;;
+    "build_iconv") build_iconv;;
+    "build_zlib") build_zlib;;
+    "build_glib") build_glib;;
+    "build_pkgconfig") build_pkgconfig;;
+    "build_libogg") build_libogg;;
+    "build_libvorbis") build_libvorbis;;
+    "build_libtheora") build_libtheora;;
+    "build_soundtouch") build_soundtouch;;
+    "build_sdl_mixer") build_sdl_mixer;;
+esac
