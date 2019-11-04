@@ -109,6 +109,7 @@ install:
     - bash -lc "export MINGW=w64"
     - bash -lc "export WIN=win32"
     - bash -lc "export PLATFORM=${ARCH}-${MINGW}-mingw32"
+    - bash -lc "echo ${PLATFORM}"
     - bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_workspace"
     #- bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_iconv"
     #- bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_zlib"
