@@ -3,7 +3,12 @@
 #
 # Constants
 #
-#PREFIX=`pwd`/deps
+PREFIX=$1
+ARCH=$2
+WIN=$3
+
+MINGW=w64
+PLATFORM=$"${ARCH}-${MINGW}-mingw32"
 HOST=$PLATFORM
 COMMON_AUTOCONF_FLAGS="--prefix=${PREFIX} --host=${HOST} --disable-static --enable-shared CPPFLAGS=-I${PREFIX}/include LDFLAGS=-L${PREFIX}/lib"
 CROSS_GCC=${PLATFORM}-gcc
@@ -420,23 +425,7 @@ main()
     build_libogg
     build_libvorbis
     build_libtheora
-    build soundtouch
+    build_soundtouch
     build_sdl_mixer
-
-    package_dist
 }
-#main
-
-arg=$1
-case arg in
-    "build_workspace") build_workspace;;
-    "build_iconv") build_iconv;;
-    "build_zlib") build_zlib;;
-    "build_glib") build_glib;;
-    "build_pkgconfig") build_pkgconfig;;
-    "build_libogg") build_libogg;;
-    "build_libvorbis") build_libvorbis;;
-    "build_libtheora") build_libtheora;;
-    "build_soundtouch") build_soundtouch;;
-    "build_sdl_mixer") build_sdl_mixer;;
-esac
+main

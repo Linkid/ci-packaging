@@ -104,22 +104,7 @@ install:
     - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/bin/pkg-config"
 
     # create the deppack
-    - bash -lc "export PREFIX='C:/projects/ci-packaging/fretwork/win32/deps'"
-    - bash -lc "export ARCH=%MSYS2_ARCH%"
-    - bash -lc "export MINGW=w64"
-    - bash -lc "export WIN=win32"
-    - bash -lc "export PLATFORM=${ARCH}-${MINGW}-mingw32"
-    - bash -lc "echo %PLATFORM%"
-    - bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_workspace"
-    #- bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_iconv"
-    #- bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_zlib"
-    #- bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_glib"
-    #- bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_pkgconfig"
-    #- bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_libogg"
-    #- bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_libvorbis"
-    #- bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_libtheora"
-    #- bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_soundtouch"
-    #- bash -lc "C:/projects/ci-packaging/fretwork-deps.sh build_sdl_mixer"
+    - bash -lc "C:/projects/ci-packaging/fretwork-deps.sh C:/projects/ci-packaging/fretwork/win32/deps %MSYS2_ARCH% %MSYSTEM_%"
 
     # dll -> exp -> lib
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/"
