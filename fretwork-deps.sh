@@ -6,6 +6,9 @@
 PREFIX=$1
 ARCH=$2
 WIN=$3
+echo "prefix: " $PREFIX
+echo "arch: " $ARCH
+echo "win: " $WIN
 
 MINGW=w64
 PLATFORM=$"${ARCH}-${MINGW}-mingw32"
