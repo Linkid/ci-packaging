@@ -47,6 +47,17 @@ download()
 
 
 #
+# Remove useless files
+#
+remove_useless()
+{
+    # remove useless files
+    rm -rf ${PREFIX}/doc
+    rm -rf ${PREFIX}/share
+}
+
+
+#
 # Build the workspace
 #
 build_workspace()
@@ -77,6 +88,7 @@ build_iconv()
     # download
     download https://github.com/win-iconv/win-iconv/archive/v${iconv_version}.tar.gz
     tar zxf v${iconv_version}.tar.gz
+    rm -rf v${iconv_version}.tar.gz
 
     # compile
     cd win-iconv-${iconv_version}
@@ -87,6 +99,9 @@ build_iconv()
     cp iconv.h ${PREFIX}/include
     cp libiconv.dll.a "${PREFIX}"/lib
     cd ..
+
+    # remove useless files
+    remove_useless
 }
 
 
@@ -101,6 +116,7 @@ build_zlib()
     # download
     download http://www.zlib.net/zlib-${zlib_version}.tar.gz
     tar zxf zlib-${zlib_version}.tar.gz
+    rm -rf zlib-${zlib_version}.tar.gz
 
     # compile
     cd zlib-${zlib_version}
@@ -109,6 +125,9 @@ build_zlib()
     cp zlib1.dll "${PREFIX}"/bin
     cp libz.dll.a "${PREFIX}"/lib
     cd ..
+
+    # remove useless files
+    remove_useless
 }
 
 
@@ -123,6 +142,7 @@ build_gettext()
     # download
     download http://ftp.gnu.org/gnu/gettext/gettext-${gettext_version}.tar.gz
     tar zxf gettext-${gettext_version}.tar.gz
+    rm -rf gettext-${gettext_version}.tar.gz
 
     # compile
     cd gettext-${gettext_version}/gettext-runtime
@@ -130,6 +150,9 @@ build_gettext()
     make
     make install
     cd ../..
+
+    # remove useless files
+    remove_useless
 }
 
 
@@ -144,6 +167,7 @@ build_libffi()
     # download
     download ftp://sourceware.org/pub/libffi/libffi-${libffi_version}.tar.gz
     tar zxf libffi-${libffi_version}.tar.gz
+    rm -rf libffi-${libffi_version}.tar.gz
 
     # compile
     cd libffi-${libffi_version}
@@ -151,6 +175,9 @@ build_libffi()
     make
     make install
     cd ..
+
+    # remove useless files
+    remove_useless
 }
 
 
@@ -177,6 +204,7 @@ build_glib()
     glib_url="http://ftp.gnome.org/pub/GNOME/sources/glib/${glib_version%.*}/${glib_name}.tar.xz"
     download ${glib_url}
     tar Jxf ${glib_name}.tar.xz
+    rm -rf ${glib_name}.tar.xz
 
     # compile
     cd ${glib_name}
@@ -189,6 +217,9 @@ build_glib()
     # copy files
     cp -v glib-2.0.pc gthread-2.0.pc ${PREFIX}/lib/pkgconfig
     cd ..
+
+    # remove useless files
+    remove_useless
 }
 
 
@@ -203,6 +234,7 @@ build_pkgconfig()
     # download
     download http://pkgconfig.freedesktop.org/releases/pkg-config-${pkgconfig_version}.tar.gz
     tar zxf pkg-config-${pkgconfig_version}.tar.gz
+    rm -rf pkg-config-${pkgconfig_version}.tar.gz
 
     # compile
     cd pkg-config-${pkgconfig_version}
@@ -210,6 +242,9 @@ build_pkgconfig()
     make
     make install
     cd ..
+
+    # remove useless files
+    remove_useless
 }
 
 
@@ -224,6 +259,7 @@ build_libogg()
     # download
     download http://downloads.xiph.org/releases/ogg/libogg-${libogg_version}.tar.xz
     tar Jxf libogg-${libogg_version}.tar.xz
+    rm -rf libogg-${libogg_version}.tar.xz
 
     # compile
     cd libogg-${libogg_version}
@@ -231,6 +267,9 @@ build_libogg()
     make
     make install
     cd ..
+
+    # remove useless files
+    remove_useless
 }
 
 
@@ -245,6 +284,7 @@ build_libvorbis()
     # download
     download http://downloads.xiph.org/releases/vorbis/libvorbis-${libvorbis_version}.tar.xz
     tar Jxf libvorbis-${libvorbis_version}.tar.xz
+    rm -rf libvorbis-${libvorbis_version}.tar.xz
 
     # compile
     cd libvorbis-${libvorbis_version}
@@ -252,6 +292,9 @@ build_libvorbis()
     make
     make install
     cd ..
+
+    # remove useless files
+    remove_useless
 }
 
 
@@ -266,6 +309,7 @@ build_libtheora()
     # download
     download http://downloads.xiph.org/releases/theora/libtheora-${libtheora_version}.tar.xz
     tar Jxf libtheora-${libtheora_version}.tar.xz
+    rm -rf libtheora-${libtheora_version}.tar.xz
 
     # compile
     cd libtheora-${libtheora_version}
@@ -279,6 +323,9 @@ build_libtheora()
     make
     make install
     cd ..
+
+    # remove useless files
+    remove_useless
 }
 
 
@@ -293,6 +340,7 @@ build_soundtouch()
     # download
     download http://www.surina.net/soundtouch/soundtouch-${soundtouch_version}.tar.gz
     tar zxf soundtouch-${soundtouch_version}.tar.gz
+    rm -rf soundtouch-${soundtouch_version}.tar.gz
 
     # compile
     cd soundtouch
@@ -301,6 +349,9 @@ build_soundtouch()
     make LDFLAGS=-no-undefined
     make install
     cd ..
+
+    # remove useless files
+    remove_useless
 }
 
 
@@ -315,6 +366,7 @@ build_sdl()
     # download
     download http://www.libsdl.org/release/SDL-${sdl_version}.tar.gz
     tar zxf SDL-${sdl_version}.tar.gz
+    rm -rf SDL-${sdl_version}.tar.gz
 
     # compile
     cd SDL-${sdl_version}
@@ -327,6 +379,9 @@ build_sdl()
     rm -f "${PREFIX}"/lib/libSDLmain.la
     cp include/SDL_config_win32.h "${PREFIX}"/include/SDL/SDL_config.h
     cd ..
+
+    # remove useless files
+    remove_useless
 }
 
 
@@ -344,6 +399,7 @@ build_sdl_mixer()
     # download
     download http://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-${sdl_mixer_version}.tar.gz
     tar zxf SDL_mixer-${sdl_mixer_version}.tar.gz
+    rm -rf SDL_mixer-${sdl_mixer_version}.tar.gz
 
     # compile
     cd SDL_mixer-${sdl_mixer_version}
@@ -351,6 +407,9 @@ build_sdl_mixer()
     make
     make install
     cd ..
+
+    # remove useless files
+    remove_useless
 }
 
 
