@@ -127,7 +127,7 @@ install:
     # path
     - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\bin;%PATH%"
     - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\lib;%PATH%"
-    - bash -lc "echo %PATH%"
+    #- bash -lc "echo %PATH%"
     - bash -lc "which pkg-config"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/pkg-config*"
 
