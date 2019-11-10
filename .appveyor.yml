@@ -65,6 +65,7 @@ build: off
 
 init:
     - "ECHO %PYTHON% %PYTHON_ARCH% %MSVC_VERSION%"
+    - "SET PATH_BACK=%PATH%"
     - "SET PATH=C:\\msys64\\%MSYSTEM%\\bin;C:\\msys64\\usr\\bin;C:\\msys64\\bin;%PATH%"
 
 install:
@@ -125,8 +126,8 @@ install:
     #- bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
 
     # path
-    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\bin;%PATH%"
-    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\lib;%PATH%"
+    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\bin;%PATH_BAK%"
+    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\lib;%PATH_BAK%"
     #- bash -lc "echo %PATH%"
     - bash -lc "which pkg-config"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/pkg-config*"
