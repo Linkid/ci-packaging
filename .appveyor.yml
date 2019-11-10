@@ -126,22 +126,21 @@ install:
     #- bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
 
     # path
-    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\bin;%PATH_BAK%"
-    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\lib;%PATH_BAK%"
-    - "SET PATH=C:\\msys64\\%MSYSTEM%\\bin;C:\\msys64\\usr\\bin;C:\\msys64\\bin;%PATH%"
-    #- bash -lc "echo %PATH%"
     - bash -lc "which pkg-config"
     - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/pkg-config*"
+    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\bin;%PATH_BAK%"
+    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\lib;%PATH_BAK%"
+    #- "SET PATH=C:\\msys64\\%MSYSTEM%\\bin;C:\\msys64\\usr\\bin;C:\\msys64\\bin;%PATH%"
 
     # make a tarball with deps (see fofix/win32/makedist)
-    - bash -lc "mkdir -p C:/projects/ci-packaging/fretwork/build"
+    #- bash -lc "mkdir -p C:/projects/ci-packaging/fretwork/build"
     #- 7z a C:\projects\ci-packaging\fretwork\build\deps.zip C:\projects\ci-packaging\fretwork\win32\deps
 
 build_script:
     - cd C:\projects\ci-packaging\fretwork
     - "%PYTHON%\\python.exe setup.py build_ext --inplace --force"
     - "%PYTHON%\\python.exe setup.py sdist"
-    - bash -lc "ls C:/projects/ci-packaging/fretwork/*"
+    #- bash -lc "ls C:/projects/ci-packaging/fretwork/*"
     - "%PYTHON%\\python.exe setup.py bdist_wheel"
 #    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py build_ext --inplace --force"
 #    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py sdist"
