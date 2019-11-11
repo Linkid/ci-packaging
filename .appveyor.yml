@@ -1,161 +1,50 @@
-version: 0.4.1.{build}
+version: 0.4.2.{build}
 
 environment:
     global:
         SDL_AUDIODRIVER: "disk"
-        MSYSTEM: MINGW64
-        # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
-        # /E:ON and /V:ON options are not enabled in the batch script intepreter
-        # See: http://stackoverflow.com/a/13751649/163740
-        #WITH_COMPILER: "cmd /E:ON /V:ON /C .\\appveyor\\run_with_compiler.cmd"
+
 
     matrix:
-        - MSYS2_ARCH: i686
-          MSYSTEM: MINGW32
-          MSYSTEM_: mingw32
-          PKG_PREFIX: "mingw-w64-i686"
-          PYTHON: "C:\\Python27"
-          PYTHON_VERSION: "python2"
-          ARCH: i386
+        - PYTHON: "C:\\Python27"
+        - PYTHON: "C:\\Python27-x64"
 
-#        - MSYS2_ARCH: x86_64
-#          MSYSTEM: MINGW64
-#          MSYSTEM_: mingw64
-#          PKG_PREFIX: "mingw-w64-x86_64"
-#          PYTHON: "C:\\Python27-x64"
-#          PYTHON_VERSION: "python2"
-#          ARCH: i386:x86-64
-#
-#        - MSYS2_ARCH: i686
-#          MSYSTEM: MINGW32
-#          MSYSTEM_: mingw32
-#          PKG_PREFIX: "mingw-w64-i686"
-#          PYTHON: "C:\\Python36"
-#          PYTHON_VERSION: "python3"
-#          ARCH: i386
-#
-#        - MSYS2_ARCH: x86_64
-#          MSYSTEM: MINGW64
-#          MSYSTEM_: mingw64
-#          PKG_PREFIX: "mingw-w64-x86_64"
-#          PYTHON: "C:\\Python36-x64"
-#          PYTHON_VERSION: "python3"
-#          ARCH: i386:x86-64
+install:
+    # Fetch submodules
+    - git submodule update --init --recursive
 
-#        - PYTHON: "C:\\Python27"
-#          PYTHON_ARCH: 32
-#          MSVC_VERSION: "Visual Studio 10"
-#
-#        - PYTHON: "C:\\Python36"
-#          PYTHON_ARCH: 32
-#          MSVC_VERSION: "Visual Studio 14"
-#
-#        - PYTHON: "C:\\Python27-x64"
-#          PYTHON_ARCH: 64
-#          MSVC_VERSION: "Visual Studio 10 Win64"
-#
-#        - PYTHON: "C:\\Python36-x64"
-#          PYTHON_ARCH: 64
-#          MSVC_VERSION: "Visual Studio 14 Win64"
+    # get windows deps
+    #- curl -fsSL -o xxx.zip http://fofix.net/downloads/fofix-win32-deppack-20130304-updated.zip
+    #- 7z x xxx.zip
+    # https://superuser.com/a/546694/562968
+    #- curl -fsSL -o xxx.tar.gz https://github.com/Linkid/win-dependencies/releases/download/0.1/fretwork-win32-deppack-20190425.tar.gz
+    #- curl -fsSL -o xxx.tar.gz https://github.com/Linkid/win-dependencies/releases/download/0.2/fretwork-win32-deppack-20190531.tar.gz
+    - curl -fsSL -o xxx.tar.gz https://github.com/Linkid/win-dependencies/releases/download/0.4/fretwork-win32-deppack-20191111.tar.gz
+    - 7z x xxx.tar.gz -so | 7z x -aoa -si -ttar -o"fofix-win32-deppack-20130304-updated"
+    - dir
+    - dir fofix-win32-deppack-20130304-updated
+    - dir fofix-win32-deppack-20130304-updated\deps
+    - mkdir fretwork\win32
+    - move fofix-win32-deppack-20130304-updated\deps fretwork\win32\
+    - dir fretwork\win32\
+    - xcopy build.cmd fretwork\
+    - echo %PKG_CONFIG_LIBDIR%
+    - echo %PKG_CONFIG_PATH%
 
-#matrix:
-#    fast_finish: true
+    # We need wheel installed to build wheels
+    - "%PYTHON%\\python.exe -m pip install wheel"
+
+    # Install python deps
+    - "%PYTHON%\\python.exe -m pip install cython"
 
 build: off
 
-init:
-    - "ECHO %PYTHON% %PYTHON_ARCH% %MSVC_VERSION%"
-    - "SET PATH_BACK=%PATH%"
-    - "SET PATH=C:\\msys64\\%MSYSTEM%\\bin;C:\\msys64\\usr\\bin;C:\\msys64\\bin;%PATH%"
-
-install:
-    # Put Python in PATH
-    #- "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
-
-    # download and unzip sources
-    # https://github.com/vladimirgamalyan/sdl2_msvc_builds/blob/master/appveyor.yml
-    #- appveyor DownloadFile https://www.libsdl.org/release/SDL-1.2.15-win32.zip
-    #- 7z x SDL-1.2.15-win32.zip > nul
-
-    # system dependencies
-    - "echo %PKG_PREFIX%"
-    - pacman -Syu --noconfirm
-    - pacman --noconfirm --needed -Sy bash pacman pacman-mirrors msys2-runtime msys2-runtime-devel
-    - bash -lc "pacman -S --noconfirm --needed --noprogressbar
-        autoconf
-        automake
-        base-devel
-        %PKG_PREFIX%-toolchain
-        %PKG_PREFIX%-llvm"
-
-    # python dependencies
-    - "%PYTHON%\\python.exe --version"
-    - "%PYTHON%\\python.exe -m pip install -U pip" # Upgrade pip
-    - "%PYTHON%\\python.exe -m pip install wheel"
-    - "%PYTHON%\\python.exe -m pip install cython"
-
-    # git submodule
-    - "git submodule update --init --recursive"
-
-    # remove libtool libs, .def files, unecessary scripts / files
-    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/doc"
-    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/share"
-    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/*.la"
-    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/lib/*.def"
-    - bash -lc "rm -rf C:/projects/ci-packaging/fretwork/win32/deps/bin/pkg-config"
-
-    # create the deppack
-    - bash -lc "C:/projects/ci-packaging/fretwork-deps.sh C:/projects/ci-packaging/fretwork/win32/deps %MSYS2_ARCH% %MSYSTEM_%"
-
-    # dll -> exp -> lib
-    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/"
-    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/*.a"
-    - bash -lc "C:/projects/ci-packaging/make_implib.sh %ARCH% C:/projects/ci-packaging/fretwork/win32/deps"
-
-    # strip binaries and libraries
-    - bash -lc "strip --strip-all C:/projects/ci-packaging/fretwork/win32/deps/bin/*.exe"
-    - bash -lc "strip --strip-all C:/projects/ci-packaging/fretwork/win32/deps/bin/*.dll"
-    #- bash -lc "strip --strip-debug C:/projects/ci-packaging/fretwork/win32/deps/lib/*.lib"
-    - bash -lc "strip --strip-debug C:/projects/ci-packaging/fretwork/win32/deps/lib/*.a"
-
-    # debug
-    #- bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/include/SDL"
-    #- bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/*.lib"
-    #- bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/*.a"
-    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/lib/pkgconfig"
-    #- bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/"
-
-    # path
-    - bash -lc "which pkg-config"
-    - bash -lc "ls C:/projects/ci-packaging/fretwork/win32/deps/bin/pkg-config*"
-    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\bin;%PATH_BAK%"
-    - "SET PATH=C:\\projects\\ci-packaging\\fretwork\\win32\\deps\\lib;%PATH_BAK%"
-    #- "SET PATH=C:\\msys64\\%MSYSTEM%\\bin;C:\\msys64\\usr\\bin;C:\\msys64\\bin;%PATH%"
-
-    # make a tarball with deps (see fofix/win32/makedist)
-    #- bash -lc "mkdir -p C:/projects/ci-packaging/fretwork/build"
-    #- 7z a C:\projects\ci-packaging\fretwork\build\deps.zip C:\projects\ci-packaging\fretwork\win32\deps
-
 build_script:
-    - cd C:\projects\ci-packaging\fretwork
+    - cd fretwork
     - "%PYTHON%\\python.exe setup.py build_ext --inplace --force"
-    - "%PYTHON%\\python.exe setup.py sdist"
-    #- bash -lc "ls C:/projects/ci-packaging/fretwork/*"
-    - "%PYTHON%\\python.exe setup.py bdist_wheel"
-#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py build_ext --inplace --force"
-#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py sdist"
-#    - bash -lc "ls C:/projects/ci-packaging/fretwork/*"
-#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON%/python.exe setup.py bdist_wheel"
+    - "build.cmd %PYTHON%\\python.exe setup.py sdist"
+    - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
 
-#after_build::
-
-#test_script:
-#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install dist/*.whl"
-#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install dist/fretwork-0.3.0.tar.gz"
-#    - bash -lc "cd C:/projects/ci-packaging/fretwork && %PYTHON_VERSION% -m pip install pytest"
-#    - bash -lc "cd C:/projects/ci-packaging/fretwork && rm -rf fretwork"
-#    - bash -lc "cd C:/projects/ci-packaging/fretwork && pytest tests"
-#    - bash -lc "cd C:/projects/ci-packaging/fretwork && python -c 'from fretwork.mixstream import *'"
 
 artifacts:
     - path: fretwork\dist\*
